@@ -66,11 +66,11 @@ export type ShopifyProductStatusEnum = "active" | "archived" | "draft";
 /** A sort order for a field. Can be Ascending or Descending. */
 export type SortOrder = "Ascending"|"Descending";
 
-/** Represents the possible values of the Topic enum. */
-export type ShopifyGdprRequestTopicEnum = "customers/data_request" | "customers/redact" | "shop/redact";
-
 /** Represents the possible values of the Collection Type enum. */
 export type ShopifyCollectionCollectionTypeEnum = "custom" | "smart";
+
+/** Represents the possible values of the Topic enum. */
+export type ShopifyGdprRequestTopicEnum = "customers/data_request" | "customers/redact" | "shop/redact";
 
 /** Represents one session result record in internal api calls. Returns a JSON blob of all the record's fields. */
 export type InternalSessionRecord = Scalars["JSONObject"];
@@ -93,11 +93,17 @@ export type InternalShopifyCollectionRecord = Scalars["JSONObject"];
 /** Represents one shopifyProductVariant result record in internal api calls. Returns a JSON blob of all the record's fields. */
 export type InternalShopifyProductVariantRecord = Scalars["JSONObject"];
 
+/** Represents one shopifyProductImage result record in internal api calls. Returns a JSON blob of all the record's fields. */
+export type InternalShopifyProductImageRecord = Scalars["JSONObject"];
 
-export type BackgroundActionResult = AvailableSavePrePurchaseProductShopifyShopResultSelection | AvailableAbortShopifySyncResultSelection | AvailableCompleteShopifySyncResultSelection | AvailableErrorShopifySyncResultSelection | AvailableRunShopifySyncResultSelection;
+/** Represents one shopifyCollect result record in internal api calls. Returns a JSON blob of all the record's fields. */
+export type InternalShopifyCollectRecord = Scalars["JSONObject"];
 
 
-export type AvailableBackgroundActionResultSelection = SavePrePurchaseProductShopifyShopResult | AbortShopifySyncResult | CompleteShopifySyncResult | ErrorShopifySyncResult | RunShopifySyncResult;
+export type BackgroundActionResult = AvailableScheduledShopifySyncResultSelection | AvailableSavePrePurchaseProductShopifyShopResultSelection | AvailableAbortShopifySyncResultSelection | AvailableCompleteShopifySyncResultSelection | AvailableErrorShopifySyncResultSelection | AvailableRunShopifySyncResultSelection;
+
+
+export type AvailableBackgroundActionResultSelection = ScheduledShopifySyncResult | SavePrePurchaseProductShopifyShopResult | AbortShopifySyncResult | CompleteShopifySyncResult | ErrorShopifySyncResult | RunShopifySyncResult;
 
 
 
@@ -246,6 +252,10 @@ export type ShopifyProductVariantFilter = {
   shop?: IDFilter | null;
 
   shopId?: IDFilter | null;
+
+  productImage?: IDFilter | null;
+
+  productImageId?: IDFilter | null;
 };
 
 
@@ -372,6 +382,80 @@ export type BooleanFilter = {
   equals?: (Scalars['Boolean'] | null) | null;
 
   notEquals?: (Scalars['Boolean'] | null) | null;
+};
+
+
+
+export type ShopifyProductImageSort = {
+
+  /** Sort the results by the id field. Defaults to ascending (smallest value first). */
+  id?: SortOrder | null;
+
+  /** Sort the results by the createdAt field. Defaults to ascending (smallest value first). */
+  createdAt?: SortOrder | null;
+
+  /** Sort the results by the updatedAt field. Defaults to ascending (smallest value first). */
+  updatedAt?: SortOrder | null;
+
+  /** Sort the results by the alt field. Defaults to ascending (smallest value first). */
+  alt?: SortOrder | null;
+
+  /** Sort the results by the shopifyCreatedAt field. Defaults to ascending (smallest value first). */
+  shopifyCreatedAt?: SortOrder | null;
+
+  /** Sort the results by the height field. Defaults to ascending (smallest value first). */
+  height?: SortOrder | null;
+
+  /** Sort the results by the position field. Defaults to ascending (smallest value first). */
+  position?: SortOrder | null;
+
+  /** Sort the results by the source field. Defaults to ascending (smallest value first). */
+  source?: SortOrder | null;
+
+  /** Sort the results by the shopifyUpdatedAt field. Defaults to ascending (smallest value first). */
+  shopifyUpdatedAt?: SortOrder | null;
+
+  /** Sort the results by the width field. Defaults to ascending (smallest value first). */
+  width?: SortOrder | null;
+};
+
+
+
+export type ShopifyProductImageFilter = {
+
+  AND?: (ShopifyProductImageFilter | null)[];
+
+  OR?: (ShopifyProductImageFilter | null)[];
+
+  NOT?: (ShopifyProductImageFilter | null)[];
+
+  id?: IDFilter | null;
+
+  createdAt?: DateTimeFilter | null;
+
+  updatedAt?: DateTimeFilter | null;
+
+  alt?: StringFilter | null;
+
+  shopifyCreatedAt?: DateTimeFilter | null;
+
+  height?: FloatFilter | null;
+
+  position?: FloatFilter | null;
+
+  source?: StringFilter | null;
+
+  shopifyUpdatedAt?: DateTimeFilter | null;
+
+  width?: FloatFilter | null;
+
+  product?: IDFilter | null;
+
+  productId?: IDFilter | null;
+
+  shop?: IDFilter | null;
+
+  shopId?: IDFilter | null;
 };
 
 
@@ -709,6 +793,69 @@ export type ShopifyCollectionFilter = {
   shopId?: IDFilter | null;
 
   collectionType?: SingleEnumFilter | null;
+};
+
+
+
+export type ShopifyCollectSort = {
+
+  /** Sort the results by the id field. Defaults to ascending (smallest value first). */
+  id?: SortOrder | null;
+
+  /** Sort the results by the createdAt field. Defaults to ascending (smallest value first). */
+  createdAt?: SortOrder | null;
+
+  /** Sort the results by the updatedAt field. Defaults to ascending (smallest value first). */
+  updatedAt?: SortOrder | null;
+
+  /** Sort the results by the shopifyCreatedAt field. Defaults to ascending (smallest value first). */
+  shopifyCreatedAt?: SortOrder | null;
+
+  /** Sort the results by the position field. Defaults to ascending (smallest value first). */
+  position?: SortOrder | null;
+
+  /** Sort the results by the sortValue field. Defaults to ascending (smallest value first). */
+  sortValue?: SortOrder | null;
+
+  /** Sort the results by the shopifyUpdatedAt field. Defaults to ascending (smallest value first). */
+  shopifyUpdatedAt?: SortOrder | null;
+};
+
+
+
+export type ShopifyCollectFilter = {
+
+  AND?: (ShopifyCollectFilter | null)[];
+
+  OR?: (ShopifyCollectFilter | null)[];
+
+  NOT?: (ShopifyCollectFilter | null)[];
+
+  id?: IDFilter | null;
+
+  createdAt?: DateTimeFilter | null;
+
+  updatedAt?: DateTimeFilter | null;
+
+  shopifyCreatedAt?: DateTimeFilter | null;
+
+  position?: FloatFilter | null;
+
+  sortValue?: StringFilter | null;
+
+  shopifyUpdatedAt?: DateTimeFilter | null;
+
+  customCollection?: IDFilter | null;
+
+  customCollectionId?: IDFilter | null;
+
+  product?: IDFilter | null;
+
+  productId?: IDFilter | null;
+
+  shop?: IDFilter | null;
+
+  shopId?: IDFilter | null;
 };
 
 
@@ -1636,6 +1783,8 @@ export type InternalShopifyProductVariantInput = {
 
   shop?: InternalBelongsToInput | null;
 
+  productImage?: InternalBelongsToInput | null;
+
   /** An optional list of atomically applied commands for race-safe mutations of the record */
   _atomics?: InternalShopifyProductVariantAtomicsInput | null;
 };
@@ -1652,6 +1801,96 @@ export type InternalShopifyProductVariantAtomicsInput = {
 
   /** Numeric atomic commands for operating on weight. */
   weight?: (NumericAtomicFieldUpdateInput)[];
+};
+
+
+
+export type InternalShopifyProductImageInput = {
+
+  state?: (Scalars['RecordState'] | null) | null;
+
+  stateHistory?: (Scalars['RecordState'] | null) | null;
+
+  id?: (Scalars['GadgetID'] | null) | null;
+
+  createdAt?: Date | Scalars['ISO8601DateString'] | null;
+
+  updatedAt?: Date | Scalars['ISO8601DateString'] | null;
+
+  alt?: (Scalars['String'] | null) | null;
+
+  shopifyCreatedAt?: Date | Scalars['ISO8601DateString'] | null;
+
+  height?: (Scalars['Float'] | null) | null;
+
+  position?: (Scalars['Float'] | null) | null;
+
+  source?: (Scalars['String'] | null) | null;
+
+  shopifyUpdatedAt?: Date | Scalars['ISO8601DateString'] | null;
+
+  width?: (Scalars['Float'] | null) | null;
+
+  product?: InternalBelongsToInput | null;
+
+  shop?: InternalBelongsToInput | null;
+
+  /** An optional list of atomically applied commands for race-safe mutations of the record */
+  _atomics?: InternalShopifyProductImageAtomicsInput | null;
+};
+
+
+
+export type InternalShopifyProductImageAtomicsInput = {
+
+  /** Numeric atomic commands for operating on height. */
+  height?: (NumericAtomicFieldUpdateInput)[];
+
+  /** Numeric atomic commands for operating on position. */
+  position?: (NumericAtomicFieldUpdateInput)[];
+
+  /** Numeric atomic commands for operating on width. */
+  width?: (NumericAtomicFieldUpdateInput)[];
+};
+
+
+
+export type InternalShopifyCollectInput = {
+
+  state?: (Scalars['RecordState'] | null) | null;
+
+  stateHistory?: (Scalars['RecordState'] | null) | null;
+
+  id?: (Scalars['GadgetID'] | null) | null;
+
+  createdAt?: Date | Scalars['ISO8601DateString'] | null;
+
+  updatedAt?: Date | Scalars['ISO8601DateString'] | null;
+
+  shopifyCreatedAt?: Date | Scalars['ISO8601DateString'] | null;
+
+  position?: (Scalars['Float'] | null) | null;
+
+  sortValue?: (Scalars['String'] | null) | null;
+
+  shopifyUpdatedAt?: Date | Scalars['ISO8601DateString'] | null;
+
+  customCollection?: InternalBelongsToInput | null;
+
+  product?: InternalBelongsToInput | null;
+
+  shop?: InternalBelongsToInput | null;
+
+  /** An optional list of atomically applied commands for race-safe mutations of the record */
+  _atomics?: InternalShopifyCollectAtomicsInput | null;
+};
+
+
+
+export type InternalShopifyCollectAtomicsInput = {
+
+  /** Numeric atomic commands for operating on position. */
+  position?: (NumericAtomicFieldUpdateInput)[];
 };
 
 
@@ -2475,6 +2714,14 @@ export type Query = {
 
   shopifyProductVariants: ShopifyProductVariantConnection;
 
+  shopifyProductImage: (ShopifyProductImage | null);
+
+  shopifyProductImages: ShopifyProductImageConnection;
+
+  shopifyCollect: (ShopifyCollect | null);
+
+  shopifyCollects: ShopifyCollectConnection;
+
   currentSession: (Session | null);
 
   shopifyConnection: Shopify;
@@ -2515,6 +2762,14 @@ export type AvailableQuerySelection = {
   shopifyProductVariant?: AvailableShopifyProductVariantSelection;
 
   shopifyProductVariants?: AvailableShopifyProductVariantConnectionSelection;
+
+  shopifyProductImage?: AvailableShopifyProductImageSelection;
+
+  shopifyProductImages?: AvailableShopifyProductImageConnectionSelection;
+
+  shopifyCollect?: AvailableShopifyCollectSelection;
+
+  shopifyCollects?: AvailableShopifyCollectConnectionSelection;
 
   currentSession?: AvailableSessionSelection;
 
@@ -2754,6 +3009,10 @@ export type ShopifyShop = {
 
   productVariants: ShopifyProductVariantConnection;
 
+  productImages: ShopifyProductImageConnection;
+
+  collects: ShopifyCollectConnection;
+
   /** Get all the fields for this record. Useful for not having to list out all the fields you want to retrieve, but slower. */
   _all: Scalars['JSONObject'];
 };
@@ -2909,6 +3168,10 @@ export type AvailableShopifyShopSelection = {
 
   productVariants?: AvailableShopifyProductVariantConnectionSelection;
 
+  productImages?: AvailableShopifyProductImageConnectionSelection;
+
+  collects?: AvailableShopifyCollectConnectionSelection;
+
   /** Get all the fields for this record. Useful for not having to list out all the fields you want to retrieve, but slower. */
   _all?: boolean | null | undefined;
 };
@@ -3014,6 +3277,12 @@ export type ShopifyProduct = {
 
   variants: ShopifyProductVariantConnection;
 
+  images: ShopifyProductImageConnection;
+
+  customCollections: ShopifyCollectionConnection;
+
+  shopifyCollects: ShopifyCollectConnection;
+
   /** Get all the fields for this record. Useful for not having to list out all the fields you want to retrieve, but slower. */
   _all: Scalars['JSONObject'];
 };
@@ -3066,6 +3335,12 @@ export type AvailableShopifyProductSelection = {
   shopId?: boolean | null | undefined;
 
   variants?: AvailableShopifyProductVariantConnectionSelection;
+
+  images?: AvailableShopifyProductImageConnectionSelection;
+
+  customCollections?: AvailableShopifyCollectionConnectionSelection;
+
+  shopifyCollects?: AvailableShopifyCollectConnectionSelection;
 
   /** Get all the fields for this record. Useful for not having to list out all the fields you want to retrieve, but slower. */
   _all?: boolean | null | undefined;
@@ -3190,6 +3465,10 @@ export type ShopifyProductVariant = {
 
   shopId: (Scalars['GadgetID'] | null);
 
+  productImage: (ShopifyProductImage | null);
+
+  productImageId: (Scalars['GadgetID'] | null);
+
   /** Get all the fields for this record. Useful for not having to list out all the fields you want to retrieve, but slower. */
   _all: Scalars['JSONObject'];
 };
@@ -3261,6 +3540,96 @@ export type AvailableShopifyProductVariantSelection = {
 
   shopId?: boolean | null | undefined;
 
+  productImage?: AvailableShopifyProductImageSelection;
+
+  productImageId?: boolean | null | undefined;
+
+  /** Get all the fields for this record. Useful for not having to list out all the fields you want to retrieve, but slower. */
+  _all?: boolean | null | undefined;
+};
+
+
+
+export type ShopifyProductImage = {
+
+  __typename: 'ShopifyProductImage';
+
+  /** The globally unique, unchanging identifier for this record. Assigned and managed by Shopify. */
+  id: Scalars['GadgetID'];
+
+  /** The time at which this record was first created. Set once upon record creation and never changed. Managed by Gadget. */
+  createdAt: Scalars['DateTime'];
+
+  /** The time at which this record was last changed. Set each time the record is successfully acted upon by an action. Managed by Gadget. */
+  updatedAt: Scalars['DateTime'];
+
+  variants: ShopifyProductVariantConnection;
+
+  alt: (Scalars['String'] | null);
+
+  shopifyCreatedAt: (Scalars['DateTime'] | null);
+
+  height: (Scalars['Float'] | null);
+
+  position: (Scalars['Float'] | null);
+
+  source: (Scalars['String'] | null);
+
+  shopifyUpdatedAt: (Scalars['DateTime'] | null);
+
+  width: (Scalars['Float'] | null);
+
+  product: (ShopifyProduct | null);
+
+  productId: (Scalars['GadgetID'] | null);
+
+  shop: (ShopifyShop | null);
+
+  shopId: (Scalars['GadgetID'] | null);
+
+  /** Get all the fields for this record. Useful for not having to list out all the fields you want to retrieve, but slower. */
+  _all: Scalars['JSONObject'];
+};
+
+
+
+export type AvailableShopifyProductImageSelection = {
+
+  __typename?: boolean | null | undefined;
+
+  /** The globally unique, unchanging identifier for this record. Assigned and managed by Shopify. */
+  id?: boolean | null | undefined;
+
+  /** The time at which this record was first created. Set once upon record creation and never changed. Managed by Gadget. */
+  createdAt?: boolean | null | undefined;
+
+  /** The time at which this record was last changed. Set each time the record is successfully acted upon by an action. Managed by Gadget. */
+  updatedAt?: boolean | null | undefined;
+
+  variants?: AvailableShopifyProductVariantConnectionSelection;
+
+  alt?: boolean | null | undefined;
+
+  shopifyCreatedAt?: boolean | null | undefined;
+
+  height?: boolean | null | undefined;
+
+  position?: boolean | null | undefined;
+
+  source?: boolean | null | undefined;
+
+  shopifyUpdatedAt?: boolean | null | undefined;
+
+  width?: boolean | null | undefined;
+
+  product?: AvailableShopifyProductSelection;
+
+  productId?: boolean | null | undefined;
+
+  shop?: AvailableShopifyShopSelection;
+
+  shopId?: boolean | null | undefined;
+
   /** Get all the fields for this record. Useful for not having to list out all the fields you want to retrieve, but slower. */
   _all?: boolean | null | undefined;
 };
@@ -3301,6 +3670,342 @@ export type AvailablePageInfoSelection = {
 
   /** When paginating forwards, the cursor to continue. */
   endCursor?: boolean | null | undefined;
+};
+
+
+/** A connection to a list of ShopifyProductImage items. */
+export type ShopifyProductImageConnection = {
+
+  __typename: 'ShopifyProductImageConnection';
+
+  /** A list of edges. */
+  edges: ShopifyProductImageEdge[];
+
+  /** Information to aid in pagination. */
+  pageInfo: PageInfo;
+};
+
+
+
+export type AvailableShopifyProductImageConnectionSelection = {
+
+  __typename?: boolean | null | undefined;
+
+  /** A list of edges. */
+  edges?: AvailableShopifyProductImageEdgeSelection;
+
+  /** Information to aid in pagination. */
+  pageInfo?: AvailablePageInfoSelection;
+};
+
+
+/** An edge in a ShopifyProductImage connection. */
+export type ShopifyProductImageEdge = {
+
+  __typename: 'ShopifyProductImageEdge';
+
+  /** The item at the end of the edge */
+  node: ShopifyProductImage;
+
+  /** A cursor for use in pagination */
+  cursor: Scalars['String'];
+};
+
+
+
+export type AvailableShopifyProductImageEdgeSelection = {
+
+  __typename?: boolean | null | undefined;
+
+  /** The item at the end of the edge */
+  node?: AvailableShopifyProductImageSelection;
+
+  /** A cursor for use in pagination */
+  cursor?: boolean | null | undefined;
+};
+
+
+/** A connection to a list of ShopifyCollection items. */
+export type ShopifyCollectionConnection = {
+
+  __typename: 'ShopifyCollectionConnection';
+
+  /** A list of edges. */
+  edges: ShopifyCollectionEdge[];
+
+  /** Information to aid in pagination. */
+  pageInfo: PageInfo;
+};
+
+
+
+export type AvailableShopifyCollectionConnectionSelection = {
+
+  __typename?: boolean | null | undefined;
+
+  /** A list of edges. */
+  edges?: AvailableShopifyCollectionEdgeSelection;
+
+  /** Information to aid in pagination. */
+  pageInfo?: AvailablePageInfoSelection;
+};
+
+
+/** An edge in a ShopifyCollection connection. */
+export type ShopifyCollectionEdge = {
+
+  __typename: 'ShopifyCollectionEdge';
+
+  /** The item at the end of the edge */
+  node: ShopifyCollection;
+
+  /** A cursor for use in pagination */
+  cursor: Scalars['String'];
+};
+
+
+
+export type AvailableShopifyCollectionEdgeSelection = {
+
+  __typename?: boolean | null | undefined;
+
+  /** The item at the end of the edge */
+  node?: AvailableShopifyCollectionSelection;
+
+  /** A cursor for use in pagination */
+  cursor?: boolean | null | undefined;
+};
+
+
+
+export type ShopifyCollection = {
+
+  __typename: 'ShopifyCollection';
+
+  /** The globally unique, unchanging identifier for this record. Assigned and managed by Shopify. */
+  id: Scalars['GadgetID'];
+
+  /** The time at which this record was first created. Set once upon record creation and never changed. Managed by Gadget. */
+  createdAt: Scalars['DateTime'];
+
+  /** The time at which this record was last changed. Set each time the record is successfully acted upon by an action. Managed by Gadget. */
+  updatedAt: Scalars['DateTime'];
+
+  body: (Scalars['String'] | null);
+
+  disjunctive: (Scalars['Boolean'] | null);
+
+  handle: (Scalars['String'] | null);
+
+  image: (Scalars['JSON'] | null);
+
+  publishedAt: (Scalars['DateTime'] | null);
+
+  publishedScope: (Scalars['String'] | null);
+
+  rules: (Scalars['JSON'] | null);
+
+  sortOrder: (Scalars['String'] | null);
+
+  templateSuffix: (Scalars['String'] | null);
+
+  title: (Scalars['String'] | null);
+
+  shopifyUpdatedAt: (Scalars['DateTime'] | null);
+
+  shop: (ShopifyShop | null);
+
+  shopId: (Scalars['GadgetID'] | null);
+
+  collectionType: ShopifyCollectionCollectionTypeEnum;
+
+  products: ShopifyProductConnection;
+
+  shopifyCollects: ShopifyCollectConnection;
+
+  /** Get all the fields for this record. Useful for not having to list out all the fields you want to retrieve, but slower. */
+  _all: Scalars['JSONObject'];
+};
+
+
+
+export type AvailableShopifyCollectionSelection = {
+
+  __typename?: boolean | null | undefined;
+
+  /** The globally unique, unchanging identifier for this record. Assigned and managed by Shopify. */
+  id?: boolean | null | undefined;
+
+  /** The time at which this record was first created. Set once upon record creation and never changed. Managed by Gadget. */
+  createdAt?: boolean | null | undefined;
+
+  /** The time at which this record was last changed. Set each time the record is successfully acted upon by an action. Managed by Gadget. */
+  updatedAt?: boolean | null | undefined;
+
+  body?: boolean | null | undefined;
+
+  disjunctive?: boolean | null | undefined;
+
+  handle?: boolean | null | undefined;
+
+  image?: boolean | null | undefined;
+
+  publishedAt?: boolean | null | undefined;
+
+  publishedScope?: boolean | null | undefined;
+
+  rules?: boolean | null | undefined;
+
+  sortOrder?: boolean | null | undefined;
+
+  templateSuffix?: boolean | null | undefined;
+
+  title?: boolean | null | undefined;
+
+  shopifyUpdatedAt?: boolean | null | undefined;
+
+  shop?: AvailableShopifyShopSelection;
+
+  shopId?: boolean | null | undefined;
+
+  collectionType?: boolean | null | undefined;
+
+  products?: AvailableShopifyProductConnectionSelection;
+
+  shopifyCollects?: AvailableShopifyCollectConnectionSelection;
+
+  /** Get all the fields for this record. Useful for not having to list out all the fields you want to retrieve, but slower. */
+  _all?: boolean | null | undefined;
+};
+
+
+/** A connection to a list of ShopifyCollect items. */
+export type ShopifyCollectConnection = {
+
+  __typename: 'ShopifyCollectConnection';
+
+  /** A list of edges. */
+  edges: ShopifyCollectEdge[];
+
+  /** Information to aid in pagination. */
+  pageInfo: PageInfo;
+};
+
+
+
+export type AvailableShopifyCollectConnectionSelection = {
+
+  __typename?: boolean | null | undefined;
+
+  /** A list of edges. */
+  edges?: AvailableShopifyCollectEdgeSelection;
+
+  /** Information to aid in pagination. */
+  pageInfo?: AvailablePageInfoSelection;
+};
+
+
+/** An edge in a ShopifyCollect connection. */
+export type ShopifyCollectEdge = {
+
+  __typename: 'ShopifyCollectEdge';
+
+  /** The item at the end of the edge */
+  node: ShopifyCollect;
+
+  /** A cursor for use in pagination */
+  cursor: Scalars['String'];
+};
+
+
+
+export type AvailableShopifyCollectEdgeSelection = {
+
+  __typename?: boolean | null | undefined;
+
+  /** The item at the end of the edge */
+  node?: AvailableShopifyCollectSelection;
+
+  /** A cursor for use in pagination */
+  cursor?: boolean | null | undefined;
+};
+
+
+
+export type ShopifyCollect = {
+
+  __typename: 'ShopifyCollect';
+
+  /** The globally unique, unchanging identifier for this record. Assigned and managed by Shopify. */
+  id: Scalars['GadgetID'];
+
+  /** The time at which this record was first created. Set once upon record creation and never changed. Managed by Gadget. */
+  createdAt: Scalars['DateTime'];
+
+  /** The time at which this record was last changed. Set each time the record is successfully acted upon by an action. Managed by Gadget. */
+  updatedAt: Scalars['DateTime'];
+
+  shopifyCreatedAt: (Scalars['DateTime'] | null);
+
+  position: (Scalars['Float'] | null);
+
+  sortValue: (Scalars['String'] | null);
+
+  shopifyUpdatedAt: (Scalars['DateTime'] | null);
+
+  customCollection: (ShopifyCollection | null);
+
+  customCollectionId: (Scalars['GadgetID'] | null);
+
+  product: (ShopifyProduct | null);
+
+  productId: (Scalars['GadgetID'] | null);
+
+  shop: (ShopifyShop | null);
+
+  shopId: (Scalars['GadgetID'] | null);
+
+  /** Get all the fields for this record. Useful for not having to list out all the fields you want to retrieve, but slower. */
+  _all: Scalars['JSONObject'];
+};
+
+
+
+export type AvailableShopifyCollectSelection = {
+
+  __typename?: boolean | null | undefined;
+
+  /** The globally unique, unchanging identifier for this record. Assigned and managed by Shopify. */
+  id?: boolean | null | undefined;
+
+  /** The time at which this record was first created. Set once upon record creation and never changed. Managed by Gadget. */
+  createdAt?: boolean | null | undefined;
+
+  /** The time at which this record was last changed. Set each time the record is successfully acted upon by an action. Managed by Gadget. */
+  updatedAt?: boolean | null | undefined;
+
+  shopifyCreatedAt?: boolean | null | undefined;
+
+  position?: boolean | null | undefined;
+
+  sortValue?: boolean | null | undefined;
+
+  shopifyUpdatedAt?: boolean | null | undefined;
+
+  customCollection?: AvailableShopifyCollectionSelection;
+
+  customCollectionId?: boolean | null | undefined;
+
+  product?: AvailableShopifyProductSelection;
+
+  productId?: boolean | null | undefined;
+
+  shop?: AvailableShopifyShopSelection;
+
+  shopId?: boolean | null | undefined;
+
+  /** Get all the fields for this record. Useful for not having to list out all the fields you want to retrieve, but slower. */
+  _all?: boolean | null | undefined;
 };
 
 
@@ -3534,152 +4239,6 @@ export type AvailableShopifyGdprRequestSelection = {
   shop?: AvailableShopifyShopSelection;
 
   shopId?: boolean | null | undefined;
-
-  /** Get all the fields for this record. Useful for not having to list out all the fields you want to retrieve, but slower. */
-  _all?: boolean | null | undefined;
-};
-
-
-/** A connection to a list of ShopifyCollection items. */
-export type ShopifyCollectionConnection = {
-
-  __typename: 'ShopifyCollectionConnection';
-
-  /** A list of edges. */
-  edges: ShopifyCollectionEdge[];
-
-  /** Information to aid in pagination. */
-  pageInfo: PageInfo;
-};
-
-
-
-export type AvailableShopifyCollectionConnectionSelection = {
-
-  __typename?: boolean | null | undefined;
-
-  /** A list of edges. */
-  edges?: AvailableShopifyCollectionEdgeSelection;
-
-  /** Information to aid in pagination. */
-  pageInfo?: AvailablePageInfoSelection;
-};
-
-
-/** An edge in a ShopifyCollection connection. */
-export type ShopifyCollectionEdge = {
-
-  __typename: 'ShopifyCollectionEdge';
-
-  /** The item at the end of the edge */
-  node: ShopifyCollection;
-
-  /** A cursor for use in pagination */
-  cursor: Scalars['String'];
-};
-
-
-
-export type AvailableShopifyCollectionEdgeSelection = {
-
-  __typename?: boolean | null | undefined;
-
-  /** The item at the end of the edge */
-  node?: AvailableShopifyCollectionSelection;
-
-  /** A cursor for use in pagination */
-  cursor?: boolean | null | undefined;
-};
-
-
-
-export type ShopifyCollection = {
-
-  __typename: 'ShopifyCollection';
-
-  /** The globally unique, unchanging identifier for this record. Assigned and managed by Shopify. */
-  id: Scalars['GadgetID'];
-
-  /** The time at which this record was first created. Set once upon record creation and never changed. Managed by Gadget. */
-  createdAt: Scalars['DateTime'];
-
-  /** The time at which this record was last changed. Set each time the record is successfully acted upon by an action. Managed by Gadget. */
-  updatedAt: Scalars['DateTime'];
-
-  body: (Scalars['String'] | null);
-
-  disjunctive: (Scalars['Boolean'] | null);
-
-  handle: (Scalars['String'] | null);
-
-  image: (Scalars['JSON'] | null);
-
-  publishedAt: (Scalars['DateTime'] | null);
-
-  publishedScope: (Scalars['String'] | null);
-
-  rules: (Scalars['JSON'] | null);
-
-  sortOrder: (Scalars['String'] | null);
-
-  templateSuffix: (Scalars['String'] | null);
-
-  title: (Scalars['String'] | null);
-
-  shopifyUpdatedAt: (Scalars['DateTime'] | null);
-
-  shop: (ShopifyShop | null);
-
-  shopId: (Scalars['GadgetID'] | null);
-
-  collectionType: ShopifyCollectionCollectionTypeEnum;
-
-  /** Get all the fields for this record. Useful for not having to list out all the fields you want to retrieve, but slower. */
-  _all: Scalars['JSONObject'];
-};
-
-
-
-export type AvailableShopifyCollectionSelection = {
-
-  __typename?: boolean | null | undefined;
-
-  /** The globally unique, unchanging identifier for this record. Assigned and managed by Shopify. */
-  id?: boolean | null | undefined;
-
-  /** The time at which this record was first created. Set once upon record creation and never changed. Managed by Gadget. */
-  createdAt?: boolean | null | undefined;
-
-  /** The time at which this record was last changed. Set each time the record is successfully acted upon by an action. Managed by Gadget. */
-  updatedAt?: boolean | null | undefined;
-
-  body?: boolean | null | undefined;
-
-  disjunctive?: boolean | null | undefined;
-
-  handle?: boolean | null | undefined;
-
-  image?: boolean | null | undefined;
-
-  publishedAt?: boolean | null | undefined;
-
-  publishedScope?: boolean | null | undefined;
-
-  rules?: boolean | null | undefined;
-
-  sortOrder?: boolean | null | undefined;
-
-  templateSuffix?: boolean | null | undefined;
-
-  title?: boolean | null | undefined;
-
-  shopifyUpdatedAt?: boolean | null | undefined;
-
-  shop?: AvailableShopifyShopSelection;
-
-  shopId?: boolean | null | undefined;
-
-  collectionType?: boolean | null | undefined;
 
   /** Get all the fields for this record. Useful for not having to list out all the fields you want to retrieve, but slower. */
   _all?: boolean | null | undefined;
@@ -4005,6 +4564,14 @@ export type InternalQueries = {
   shopifyProductVariant: (InternalShopifyProductVariantRecord | null);
 
   listShopifyProductVariant: InternalShopifyProductVariantRecordConnection;
+
+  shopifyProductImage: (InternalShopifyProductImageRecord | null);
+
+  listShopifyProductImage: InternalShopifyProductImageRecordConnection;
+
+  shopifyCollect: (InternalShopifyCollectRecord | null);
+
+  listShopifyCollect: InternalShopifyCollectRecordConnection;
 };
 
 
@@ -4043,6 +4610,14 @@ export type AvailableInternalQueriesSelection = {
   shopifyProductVariant?: boolean | null | undefined;
 
   listShopifyProductVariant?: AvailableInternalShopifyProductVariantRecordConnectionSelection;
+
+  shopifyProductImage?: boolean | null | undefined;
+
+  listShopifyProductImage?: AvailableInternalShopifyProductImageRecordConnectionSelection;
+
+  shopifyCollect?: boolean | null | undefined;
+
+  listShopifyCollect?: AvailableInternalShopifyCollectRecordConnectionSelection;
 };
 
 
@@ -4410,6 +4985,110 @@ export type AvailableInternalShopifyProductVariantRecordEdgeSelection = {
 };
 
 
+/** A connection to a list of InternalShopifyProductImageRecord items. */
+export type InternalShopifyProductImageRecordConnection = {
+
+  __typename: 'InternalShopifyProductImageRecordConnection';
+
+  /** A list of edges. */
+  edges: InternalShopifyProductImageRecordEdge[];
+
+  /** Information to aid in pagination. */
+  pageInfo: PageInfo;
+};
+
+
+
+export type AvailableInternalShopifyProductImageRecordConnectionSelection = {
+
+  __typename?: boolean | null | undefined;
+
+  /** A list of edges. */
+  edges?: AvailableInternalShopifyProductImageRecordEdgeSelection;
+
+  /** Information to aid in pagination. */
+  pageInfo?: AvailablePageInfoSelection;
+};
+
+
+/** An edge in a InternalShopifyProductImageRecord connection. */
+export type InternalShopifyProductImageRecordEdge = {
+
+  __typename: 'InternalShopifyProductImageRecordEdge';
+
+  /** The item at the end of the edge */
+  node: InternalShopifyProductImageRecord;
+
+  /** A cursor for use in pagination */
+  cursor: Scalars['String'];
+};
+
+
+
+export type AvailableInternalShopifyProductImageRecordEdgeSelection = {
+
+  __typename?: boolean | null | undefined;
+
+  /** The item at the end of the edge */
+  node?: boolean | null | undefined;
+
+  /** A cursor for use in pagination */
+  cursor?: boolean | null | undefined;
+};
+
+
+/** A connection to a list of InternalShopifyCollectRecord items. */
+export type InternalShopifyCollectRecordConnection = {
+
+  __typename: 'InternalShopifyCollectRecordConnection';
+
+  /** A list of edges. */
+  edges: InternalShopifyCollectRecordEdge[];
+
+  /** Information to aid in pagination. */
+  pageInfo: PageInfo;
+};
+
+
+
+export type AvailableInternalShopifyCollectRecordConnectionSelection = {
+
+  __typename?: boolean | null | undefined;
+
+  /** A list of edges. */
+  edges?: AvailableInternalShopifyCollectRecordEdgeSelection;
+
+  /** Information to aid in pagination. */
+  pageInfo?: AvailablePageInfoSelection;
+};
+
+
+/** An edge in a InternalShopifyCollectRecord connection. */
+export type InternalShopifyCollectRecordEdge = {
+
+  __typename: 'InternalShopifyCollectRecordEdge';
+
+  /** The item at the end of the edge */
+  node: InternalShopifyCollectRecord;
+
+  /** A cursor for use in pagination */
+  cursor: Scalars['String'];
+};
+
+
+
+export type AvailableInternalShopifyCollectRecordEdgeSelection = {
+
+  __typename?: boolean | null | undefined;
+
+  /** The item at the end of the edge */
+  node?: boolean | null | undefined;
+
+  /** A cursor for use in pagination */
+  cursor?: boolean | null | undefined;
+};
+
+
 
 export type Mutation = {
 
@@ -4434,6 +5113,8 @@ export type Mutation = {
   runShopifySync: (RunShopifySyncResult | null);
 
   bulkRunShopifySyncs: (BulkRunShopifySyncsResult | null);
+
+  scheduledShopifySync: (ScheduledShopifySyncResult | null);
 
   shopifyConnection: (ShopifyConnectionMutations | null);
 
@@ -4467,6 +5148,8 @@ export type AvailableMutationSelection = {
   runShopifySync?: AvailableRunShopifySyncResultSelection;
 
   bulkRunShopifySyncs?: AvailableBulkRunShopifySyncsResultSelection;
+
+  scheduledShopifySync?: AvailableScheduledShopifySyncResultSelection;
 
   shopifyConnection?: AvailableShopifyConnectionMutationsSelection;
 
@@ -4767,6 +5450,32 @@ export type AvailableBulkRunShopifySyncsResultSelection = {
 
 
 
+export type ScheduledShopifySyncResult = {
+
+  __typename: 'ScheduledShopifySyncResult';
+
+  success: Scalars['Boolean'];
+
+  errors: ExecutionError[];
+
+  result: (Scalars['JSON'] | null);
+};
+
+
+
+export type AvailableScheduledShopifySyncResultSelection = {
+
+  __typename?: boolean | null | undefined;
+
+  success?: boolean | null | undefined;
+
+  errors?: AvailableExecutionErrorSelection;
+
+  result?: boolean | null | undefined;
+};
+
+
+
 export type ShopifyConnectionMutations = {
 
   __typename: 'ShopifyConnectionMutations';
@@ -4834,6 +5543,8 @@ export type BackgroundMutations = {
   runShopifySync: EnqueueBackgroundActionResult;
 
   bulkRunShopifySyncs: BulkEnqueueBackgroundActionResult;
+
+  scheduledShopifySync: EnqueueBackgroundActionResult;
 };
 
 
@@ -4861,6 +5572,8 @@ export type AvailableBackgroundMutationsSelection = {
   runShopifySync?: AvailableEnqueueBackgroundActionResultSelection;
 
   bulkRunShopifySyncs?: AvailableBulkEnqueueBackgroundActionResultSelection;
+
+  scheduledShopifySync?: AvailableEnqueueBackgroundActionResultSelection;
 };
 
 
@@ -5059,6 +5772,40 @@ export type InternalMutations = {
   triggerUpdateShopifyProductVariant: (UpdateShopifyProductVariantResult | null);
 
   triggerDeleteShopifyProductVariant: (DeleteShopifyProductVariantResult | null);
+
+  createShopifyProductImage: (InternalCreateShopifyProductImageResult | null);
+
+  updateShopifyProductImage: (InternalUpdateShopifyProductImageResult | null);
+
+  deleteShopifyProductImage: (InternalDeleteShopifyProductImageResult | null);
+
+  deleteManyShopifyProductImage: (InternalDeleteManyShopifyProductImageResult | null);
+
+  bulkCreateShopifyProductImages: (InternalBulkCreateShopifyProductImagesResult | null);
+
+  triggerCreateShopifyProductImage: (CreateShopifyProductImageResult | null);
+
+  triggerUpdateShopifyProductImage: (UpdateShopifyProductImageResult | null);
+
+  triggerDeleteShopifyProductImage: (DeleteShopifyProductImageResult | null);
+
+  createShopifyCollect: (InternalCreateShopifyCollectResult | null);
+
+  updateShopifyCollect: (InternalUpdateShopifyCollectResult | null);
+
+  deleteShopifyCollect: (InternalDeleteShopifyCollectResult | null);
+
+  deleteManyShopifyCollect: (InternalDeleteManyShopifyCollectResult | null);
+
+  bulkCreateShopifyCollects: (InternalBulkCreateShopifyCollectsResult | null);
+
+  triggerCreateShopifyCollect: (CreateShopifyCollectResult | null);
+
+  triggerUpdateShopifyCollect: (UpdateShopifyCollectResult | null);
+
+  triggerDeleteShopifyCollect: (DeleteShopifyCollectResult | null);
+
+  triggerScheduledShopifySync: (ScheduledShopifySyncResult | null);
 };
 
 
@@ -5185,6 +5932,40 @@ export type AvailableInternalMutationsSelection = {
   triggerUpdateShopifyProductVariant?: AvailableUpdateShopifyProductVariantResultSelection;
 
   triggerDeleteShopifyProductVariant?: AvailableDeleteShopifyProductVariantResultSelection;
+
+  createShopifyProductImage?: AvailableInternalCreateShopifyProductImageResultSelection;
+
+  updateShopifyProductImage?: AvailableInternalUpdateShopifyProductImageResultSelection;
+
+  deleteShopifyProductImage?: AvailableInternalDeleteShopifyProductImageResultSelection;
+
+  deleteManyShopifyProductImage?: AvailableInternalDeleteManyShopifyProductImageResultSelection;
+
+  bulkCreateShopifyProductImages?: AvailableInternalBulkCreateShopifyProductImagesResultSelection;
+
+  triggerCreateShopifyProductImage?: AvailableCreateShopifyProductImageResultSelection;
+
+  triggerUpdateShopifyProductImage?: AvailableUpdateShopifyProductImageResultSelection;
+
+  triggerDeleteShopifyProductImage?: AvailableDeleteShopifyProductImageResultSelection;
+
+  createShopifyCollect?: AvailableInternalCreateShopifyCollectResultSelection;
+
+  updateShopifyCollect?: AvailableInternalUpdateShopifyCollectResultSelection;
+
+  deleteShopifyCollect?: AvailableInternalDeleteShopifyCollectResultSelection;
+
+  deleteManyShopifyCollect?: AvailableInternalDeleteManyShopifyCollectResultSelection;
+
+  bulkCreateShopifyCollects?: AvailableInternalBulkCreateShopifyCollectsResultSelection;
+
+  triggerCreateShopifyCollect?: AvailableCreateShopifyCollectResultSelection;
+
+  triggerUpdateShopifyCollect?: AvailableUpdateShopifyCollectResultSelection;
+
+  triggerDeleteShopifyCollect?: AvailableDeleteShopifyCollectResultSelection;
+
+  triggerScheduledShopifySync?: AvailableScheduledShopifySyncResultSelection;
 };
 
 
@@ -6465,6 +7246,406 @@ export type DeleteShopifyProductVariantResult = {
 
 
 export type AvailableDeleteShopifyProductVariantResultSelection = {
+
+  __typename?: boolean | null | undefined;
+
+  success?: boolean | null | undefined;
+
+  errors?: AvailableExecutionErrorSelection;
+};
+
+
+
+export type InternalCreateShopifyProductImageResult = {
+
+  __typename: 'InternalCreateShopifyProductImageResult';
+
+  success: Scalars['Boolean'];
+
+  errors: ExecutionError[];
+
+  shopifyProductImage: (InternalShopifyProductImageRecord | null);
+};
+
+
+
+export type AvailableInternalCreateShopifyProductImageResultSelection = {
+
+  __typename?: boolean | null | undefined;
+
+  success?: boolean | null | undefined;
+
+  errors?: AvailableExecutionErrorSelection;
+
+  shopifyProductImage?: boolean | null | undefined;
+};
+
+
+
+export type InternalUpdateShopifyProductImageResult = {
+
+  __typename: 'InternalUpdateShopifyProductImageResult';
+
+  success: Scalars['Boolean'];
+
+  errors: ExecutionError[];
+
+  shopifyProductImage: (InternalShopifyProductImageRecord | null);
+};
+
+
+
+export type AvailableInternalUpdateShopifyProductImageResultSelection = {
+
+  __typename?: boolean | null | undefined;
+
+  success?: boolean | null | undefined;
+
+  errors?: AvailableExecutionErrorSelection;
+
+  shopifyProductImage?: boolean | null | undefined;
+};
+
+
+
+export type InternalDeleteShopifyProductImageResult = {
+
+  __typename: 'InternalDeleteShopifyProductImageResult';
+
+  success: Scalars['Boolean'];
+
+  errors: ExecutionError[];
+
+  shopifyProductImage: (InternalShopifyProductImageRecord | null);
+};
+
+
+
+export type AvailableInternalDeleteShopifyProductImageResultSelection = {
+
+  __typename?: boolean | null | undefined;
+
+  success?: boolean | null | undefined;
+
+  errors?: AvailableExecutionErrorSelection;
+
+  shopifyProductImage?: boolean | null | undefined;
+};
+
+
+
+export type InternalDeleteManyShopifyProductImageResult = {
+
+  __typename: 'InternalDeleteManyShopifyProductImageResult';
+
+  success: Scalars['Boolean'];
+
+  errors: ExecutionError[];
+};
+
+
+
+export type AvailableInternalDeleteManyShopifyProductImageResultSelection = {
+
+  __typename?: boolean | null | undefined;
+
+  success?: boolean | null | undefined;
+
+  errors?: AvailableExecutionErrorSelection;
+};
+
+
+
+export type InternalBulkCreateShopifyProductImagesResult = {
+
+  __typename: 'InternalBulkCreateShopifyProductImagesResult';
+
+  success: Scalars['Boolean'];
+
+  errors: ExecutionError[];
+
+  shopifyProductImages: (InternalShopifyProductImageRecord | null)[];
+};
+
+
+
+export type AvailableInternalBulkCreateShopifyProductImagesResultSelection = {
+
+  __typename?: boolean | null | undefined;
+
+  success?: boolean | null | undefined;
+
+  errors?: AvailableExecutionErrorSelection;
+
+  shopifyProductImages?: boolean | null | undefined;
+};
+
+
+
+export type CreateShopifyProductImageResult = {
+
+  __typename: 'CreateShopifyProductImageResult';
+
+  success: Scalars['Boolean'];
+
+  errors: ExecutionError[];
+
+  shopifyProductImage: (ShopifyProductImage | null);
+};
+
+
+
+export type AvailableCreateShopifyProductImageResultSelection = {
+
+  __typename?: boolean | null | undefined;
+
+  success?: boolean | null | undefined;
+
+  errors?: AvailableExecutionErrorSelection;
+
+  shopifyProductImage?: AvailableShopifyProductImageSelection;
+};
+
+
+
+export type UpdateShopifyProductImageResult = {
+
+  __typename: 'UpdateShopifyProductImageResult';
+
+  success: Scalars['Boolean'];
+
+  errors: ExecutionError[];
+
+  shopifyProductImage: (ShopifyProductImage | null);
+};
+
+
+
+export type AvailableUpdateShopifyProductImageResultSelection = {
+
+  __typename?: boolean | null | undefined;
+
+  success?: boolean | null | undefined;
+
+  errors?: AvailableExecutionErrorSelection;
+
+  shopifyProductImage?: AvailableShopifyProductImageSelection;
+};
+
+
+
+export type DeleteShopifyProductImageResult = {
+
+  __typename: 'DeleteShopifyProductImageResult';
+
+  success: Scalars['Boolean'];
+
+  errors: ExecutionError[];
+};
+
+
+
+export type AvailableDeleteShopifyProductImageResultSelection = {
+
+  __typename?: boolean | null | undefined;
+
+  success?: boolean | null | undefined;
+
+  errors?: AvailableExecutionErrorSelection;
+};
+
+
+
+export type InternalCreateShopifyCollectResult = {
+
+  __typename: 'InternalCreateShopifyCollectResult';
+
+  success: Scalars['Boolean'];
+
+  errors: ExecutionError[];
+
+  shopifyCollect: (InternalShopifyCollectRecord | null);
+};
+
+
+
+export type AvailableInternalCreateShopifyCollectResultSelection = {
+
+  __typename?: boolean | null | undefined;
+
+  success?: boolean | null | undefined;
+
+  errors?: AvailableExecutionErrorSelection;
+
+  shopifyCollect?: boolean | null | undefined;
+};
+
+
+
+export type InternalUpdateShopifyCollectResult = {
+
+  __typename: 'InternalUpdateShopifyCollectResult';
+
+  success: Scalars['Boolean'];
+
+  errors: ExecutionError[];
+
+  shopifyCollect: (InternalShopifyCollectRecord | null);
+};
+
+
+
+export type AvailableInternalUpdateShopifyCollectResultSelection = {
+
+  __typename?: boolean | null | undefined;
+
+  success?: boolean | null | undefined;
+
+  errors?: AvailableExecutionErrorSelection;
+
+  shopifyCollect?: boolean | null | undefined;
+};
+
+
+
+export type InternalDeleteShopifyCollectResult = {
+
+  __typename: 'InternalDeleteShopifyCollectResult';
+
+  success: Scalars['Boolean'];
+
+  errors: ExecutionError[];
+
+  shopifyCollect: (InternalShopifyCollectRecord | null);
+};
+
+
+
+export type AvailableInternalDeleteShopifyCollectResultSelection = {
+
+  __typename?: boolean | null | undefined;
+
+  success?: boolean | null | undefined;
+
+  errors?: AvailableExecutionErrorSelection;
+
+  shopifyCollect?: boolean | null | undefined;
+};
+
+
+
+export type InternalDeleteManyShopifyCollectResult = {
+
+  __typename: 'InternalDeleteManyShopifyCollectResult';
+
+  success: Scalars['Boolean'];
+
+  errors: ExecutionError[];
+};
+
+
+
+export type AvailableInternalDeleteManyShopifyCollectResultSelection = {
+
+  __typename?: boolean | null | undefined;
+
+  success?: boolean | null | undefined;
+
+  errors?: AvailableExecutionErrorSelection;
+};
+
+
+
+export type InternalBulkCreateShopifyCollectsResult = {
+
+  __typename: 'InternalBulkCreateShopifyCollectsResult';
+
+  success: Scalars['Boolean'];
+
+  errors: ExecutionError[];
+
+  shopifyCollects: (InternalShopifyCollectRecord | null)[];
+};
+
+
+
+export type AvailableInternalBulkCreateShopifyCollectsResultSelection = {
+
+  __typename?: boolean | null | undefined;
+
+  success?: boolean | null | undefined;
+
+  errors?: AvailableExecutionErrorSelection;
+
+  shopifyCollects?: boolean | null | undefined;
+};
+
+
+
+export type CreateShopifyCollectResult = {
+
+  __typename: 'CreateShopifyCollectResult';
+
+  success: Scalars['Boolean'];
+
+  errors: ExecutionError[];
+
+  shopifyCollect: (ShopifyCollect | null);
+};
+
+
+
+export type AvailableCreateShopifyCollectResultSelection = {
+
+  __typename?: boolean | null | undefined;
+
+  success?: boolean | null | undefined;
+
+  errors?: AvailableExecutionErrorSelection;
+
+  shopifyCollect?: AvailableShopifyCollectSelection;
+};
+
+
+
+export type UpdateShopifyCollectResult = {
+
+  __typename: 'UpdateShopifyCollectResult';
+
+  success: Scalars['Boolean'];
+
+  errors: ExecutionError[];
+
+  shopifyCollect: (ShopifyCollect | null);
+};
+
+
+
+export type AvailableUpdateShopifyCollectResultSelection = {
+
+  __typename?: boolean | null | undefined;
+
+  success?: boolean | null | undefined;
+
+  errors?: AvailableExecutionErrorSelection;
+
+  shopifyCollect?: AvailableShopifyCollectSelection;
+};
+
+
+
+export type DeleteShopifyCollectResult = {
+
+  __typename: 'DeleteShopifyCollectResult';
+
+  success: Scalars['Boolean'];
+
+  errors: ExecutionError[];
+};
+
+
+
+export type AvailableDeleteShopifyCollectResultSelection = {
 
   __typename?: boolean | null | undefined;
 

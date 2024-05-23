@@ -14,6 +14,7 @@ export const schema: GadgetModel = {
       "disjunctive",
       "handle",
       "image",
+      "products",
       "publishedAt",
       "publishedScope",
       "rules",

@@ -22,6 +22,7 @@ export type DefaultShopifyCollectionServerSelection = {
       readonly shopId: true;
     readonly shop: false;
       readonly collectionType: true;
+      readonly products: false;
   };
 
   

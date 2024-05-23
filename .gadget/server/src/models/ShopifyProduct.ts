@@ -25,6 +25,8 @@ export type DefaultShopifyProductServerSelection = {
       readonly shopId: true;
     readonly shop: false;
       readonly variants: false;
+      readonly images: false;
+      readonly customCollections: false;
   };
 
   

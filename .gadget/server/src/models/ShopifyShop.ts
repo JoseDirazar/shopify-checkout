@@ -75,6 +75,8 @@ export type DefaultShopifyShopServerSelection = {
       readonly prePurchaseProduct: true;
       readonly collections: false;
       readonly productVariants: false;
+      readonly productImages: false;
+      readonly collects: false;
   };
 
   

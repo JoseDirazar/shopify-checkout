@@ -21,6 +21,7 @@ export type DefaultShopifyCollectionServerSelection = {
     readonly shopId: true;
     readonly shop: false;
     readonly collectionType: true;
+    readonly products: false;
 };
 /** Context of the `create` action on the `shopifyCollection` model. */
 export interface CreateShopifyCollectionActionContext extends AmbientContext {

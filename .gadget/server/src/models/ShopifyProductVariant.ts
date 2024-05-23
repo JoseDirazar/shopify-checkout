@@ -34,6 +34,8 @@ export type DefaultShopifyProductVariantServerSelection = {
     readonly product: false;
       readonly shopId: true;
     readonly shop: false;
+      readonly productImageId: true;
+    readonly productImage: false;
   };
 
   

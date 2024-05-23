@@ -33,6 +33,8 @@ export type DefaultShopifyProductVariantServerSelection = {
     readonly product: false;
     readonly shopId: true;
     readonly shop: false;
+    readonly productImageId: true;
+    readonly productImage: false;
 };
 /** Context of the `create` action on the `shopifyProductVariant` model. */
 export interface CreateShopifyProductVariantActionContext extends AmbientContext {

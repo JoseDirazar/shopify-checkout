@@ -90,20 +90,20 @@ export default function () {
   // use the Gadget React hooks to fetch products as options for Select component
   const [
     { data: products, fetching: productsFetching, error: productsFetchError },
-  ] = useFindMany(api.shopifyProduct, {
+  ] = useFindMany(api.shopifyCollection, {
     select: {
       id: true,
       title: true,
-      variants: {
+      products: {
         edges: {
           node: {
-            title: true,
-            price: true,
+            _all: true,
           },
         },
       },
     },
   });
+  console.log(products);
   // get the current shop id (shop tenancy applied automatically, only one shop available)
   const [{ data: shopData, fetching: shopFetching, error: shopFetchError }] =
     useFindFirst(api.shopifyShop, {
@@ -111,8 +111,6 @@ export default function () {
         id: true,
       },
     });
-
-  console.log("collections", products);
 
   // a React useEffect hook to build product options for the Select component
   useEffect(() => {

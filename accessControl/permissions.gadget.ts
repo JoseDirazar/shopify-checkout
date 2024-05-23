@@ -12,6 +12,17 @@ export const permissions: GadgetPermissions = {
     "shopify-app-users": {
       storageKey: "Role-Shopify-App",
       models: {
+        shopifyCollect: {
+          read: {
+            filter:
+              "accessControl/filters/shopify/shopifyCollect.gelly",
+          },
+          actions: {
+            create: true,
+            delete: true,
+            update: true,
+          },
+        },
         shopifyCollection: {
           read: {
             filter:
@@ -37,6 +48,17 @@ export const permissions: GadgetPermissions = {
           read: {
             filter:
               "accessControl/filters/shopify/shopifyProduct.gelly",
+          },
+          actions: {
+            create: true,
+            delete: true,
+            update: true,
+          },
+        },
+        shopifyProductImage: {
+          read: {
+            filter:
+              "accessControl/filters/shopify/shopifyProductImage.gelly",
           },
           actions: {
             create: true,

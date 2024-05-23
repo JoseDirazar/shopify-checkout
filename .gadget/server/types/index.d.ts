@@ -8,7 +8,7 @@
 *   \___|_| |_|\___|\___|_|\_\___/ \__,_|\__|     \__\___||___/\__|_|_| |_|\__, |
 *                                                                          |___/
 *
-* Built for environment `Development` at version 137
+* Built for environment `Development` at version 150
 * Framework version: ^1.0.0
 * Edit this app here: https://checkout-testing.gadget.dev/edit
 */
@@ -36,6 +36,8 @@ export * from "./models/ShopifyShop";
 export * from "./models/ShopifySync";
 export * from "./models/ShopifyCollection";
 export * from "./models/ShopifyProductVariant";
+export * from "./models/ShopifyProductImage";
+export * from "./models/ShopifyCollect";
 /**
  * An instance of the Gadget logger
  */

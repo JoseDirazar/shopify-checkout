@@ -3,6 +3,7 @@ import { GadgetConnection, GadgetTransaction, InternalModelManager, ActionFuncti
 import type { ClientOptions as ApiClientOptions, AnyClient } from '@gadgetinc/api-client-core';
 import { BackgroundActionHandle, type EnqueueBackgroundActionOptions, type AnyActionFunction } from '@gadgetinc/api-client-core';
 import type { DocumentNode } from 'graphql';
+import type { Scalars } from "./types";
 import { SessionManager } from "./models/Session.js";
 import { ShopifyGdprRequestManager } from "./models/ShopifyGdprRequest.js";
 import { ShopifyProductManager } from "./models/ShopifyProduct.js";
@@ -10,6 +11,8 @@ import { ShopifyShopManager } from "./models/ShopifyShop.js";
 import { ShopifySyncManager } from "./models/ShopifySync.js";
 import { ShopifyCollectionManager } from "./models/ShopifyCollection.js";
 import { ShopifyProductVariantManager } from "./models/ShopifyProductVariant.js";
+import { ShopifyProductImageManager } from "./models/ShopifyProductImage.js";
+import { ShopifyCollectManager } from "./models/ShopifyCollect.js";
 import { CurrentSessionManager } from "./models/CurrentSession.js";
 type InternalModelManagers = {
     session: InternalModelManager;
@@ -19,6 +22,8 @@ type InternalModelManagers = {
     shopifySync: InternalModelManager;
     shopifyCollection: InternalModelManager;
     shopifyProductVariant: InternalModelManager;
+    shopifyProductImage: InternalModelManager;
+    shopifyCollect: InternalModelManager;
 };
 type ClientOptions = Omit<ApiClientOptions, "environment"> & {
     environment?: string;
@@ -37,6 +42,8 @@ export declare class Client implements AnyClient {
     shopifySync: ShopifySyncManager;
     shopifyCollection: ShopifyCollectionManager;
     shopifyProductVariant: ShopifyProductVariantManager;
+    shopifyProductImage: ShopifyProductImageManager;
+    shopifyCollect: ShopifyCollectManager;
     currentSession: CurrentSessionManager;
     /**
     * Namespaced object for accessing models via the Gadget internal APIs, which provide lower level and higher privileged operations directly against the database. Useful for maintenance operations like migrations or correcting broken data, and for implementing the high level actions.
@@ -66,9 +73,22 @@ export declare class Client implements AnyClient {
             };
         };
         shopifyProduct: {
+            images: {
+                type: string;
+                model: string;
+            };
             variants: {
                 type: string;
                 model: string;
+            };
+            customCollections: {
+                type: string;
+                model: string;
+                through: string;
+            };
+            shopifyCollects: {
+                model: string;
+                type: string;
             };
             shop: {
                 type: string;
@@ -96,6 +116,14 @@ export declare class Client implements AnyClient {
                 type: string;
                 model: string;
             };
+            productImages: {
+                type: string;
+                model: string;
+            };
+            collects: {
+                type: string;
+                model: string;
+            };
         };
         shopifySync: {
             shop: {
@@ -104,12 +132,53 @@ export declare class Client implements AnyClient {
             };
         };
         shopifyCollection: {
+            products: {
+                type: string;
+                model: string;
+                through: string;
+            };
+            shopifyCollects: {
+                model: string;
+                type: string;
+            };
             shop: {
                 type: string;
                 model: string;
             };
         };
         shopifyProductVariant: {
+            product: {
+                type: string;
+                model: string;
+            };
+            productImage: {
+                type: string;
+                model: string;
+            };
+            shop: {
+                type: string;
+                model: string;
+            };
+        };
+        shopifyProductImage: {
+            variants: {
+                type: string;
+                model: string;
+            };
+            product: {
+                type: string;
+                model: string;
+            };
+            shop: {
+                type: string;
+                model: string;
+            };
+        };
+        shopifyCollect: {
+            customCollection: {
+                type: string;
+                model: string;
+            };
             product: {
                 type: string;
                 model: string;
@@ -122,6 +191,48 @@ export declare class Client implements AnyClient {
     };
     environment: string;
     constructor(options?: ClientOptions);
+    /** Executes the scheduledShopifySync global action. */
+    scheduledShopifySync: {
+        (variables: {
+            apiKeys?: ((Scalars['String'] | null))[];
+            syncSince?: Date | Scalars['ISO8601DateString'] | null;
+            models?: ((Scalars['String'] | null))[];
+            force?: (Scalars['Boolean'] | null) | null;
+            startReason?: (Scalars['String'] | null) | null;
+        }): Promise<any>;
+        type: "globalAction";
+        operationName: "scheduledShopifySync";
+        namespace: null;
+        variablesType: {
+            apiKeys?: ((Scalars['String'] | null))[];
+            syncSince?: Date | Scalars['ISO8601DateString'] | null;
+            models?: ((Scalars['String'] | null))[];
+            force?: (Scalars['Boolean'] | null) | null;
+            startReason?: (Scalars['String'] | null) | null;
+        } | undefined;
+        variables: {
+            "apiKeys": {
+                required: false;
+                type: "[String!]";
+            };
+            "syncSince": {
+                required: false;
+                type: "DateTime";
+            };
+            "models": {
+                required: false;
+                type: "[String!]";
+            };
+            "force": {
+                required: false;
+                type: "Boolean";
+            };
+            "startReason": {
+                required: false;
+                type: "String";
+            };
+        };
+    };
     /** Run an arbitrary GraphQL query. */
     query(graphQL: string | DocumentNode, variables?: Record<string, any>, options?: Partial<OperationContext>): Promise<any>;
     /** Run an arbitrary GraphQL mutation. */
