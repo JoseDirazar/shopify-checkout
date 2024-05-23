@@ -1,0 +1,12 @@
+{
+  "application": "checkout-testing",
+  "environment": "development",
+  "environments": {
+    "development": {
+      "filesVersion": "234"
+    }
+  },
+  "app": "checkout-testing",
+  "filesVersion": "234",
+  "mtime": 1716481650196
+}

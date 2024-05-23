@@ -1,0 +1,42 @@
+{
+  "name": "@gadget-client/checkout-testing",
+  "version": "1.2.0-development.137",
+  "files": [
+    "dist-*/",
+    "types",
+    "types-esm",
+    "bin/"
+  ],
+  "source": "src/index.ts",
+  "types": "types/index.d.ts",
+  "main": "dist-cjs/index.js",
+  "module": "dist-esm/index.js",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./types-esm/index.d.ts",
+        "default": "./dist-esm/index.js"
+      },
+      "require": {
+        "types": "./types/index.d.ts",
+        "default": "./dist-cjs/index.js"
+      }
+    }
+  },
+  "private": true,
+  "dependencies": {
+    "@gadgetinc/api-client-core": "0.15.23"
+  },
+  "devDependencies": {
+    "typescript": "^5.4.5",
+    "@types/node": "^20.8.4"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit"
+  },
+  "gadget": {
+    "applicationName": "checkout-testing",
+    "environmentName": "Development",
+    "environmentVersion": "137"
+  }
+}
