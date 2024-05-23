@@ -118,10 +118,10 @@ async function savePrePurchaseProductShopifyShop(id, variables, options) {
         required: true,
         type: "GadgetID"
       },
-      "productId": {
-        value: newVariables.productId,
+      "collectionIds": {
+        value: newVariables.collectionIds,
         required: false,
-        type: "String"
+        type: "[String!]"
       }
     },
     options,
@@ -257,15 +257,15 @@ class ShopifyShopManager {
             required: true,
             type: "GadgetID"
           },
-          "productId": {
+          "collectionIds": {
             required: false,
-            type: "String"
+            type: "[String!]"
           }
         },
         hasAmbiguousIdentifier: false,
         /** @deprecated -- effects are dead, long live AAC */
         hasCreateOrUpdateEffect: false,
-        paramOnlyVariables: ["productId"],
+        paramOnlyVariables: ["collectionIds"],
         hasReturnType: false,
         acceptsModelInput: false
       }

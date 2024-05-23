@@ -16,11 +16,12 @@ import {
   Button,
   FormLayout,
   SkeletonDisplayText,
+  Card,
 } from "@shopify/polaris";
 import { api } from "../api";
 import { useEffect, useState } from "react";
 
-const PrePurchaseForm = ({ products, shop }) => {
+const PrePurchaseForm = ({ collections, shop }) => {
   // useActionForm used to handle form state and submission
   const { submit, control, formState, error, setValue, watch } = useActionForm(
     api.shopifyShop.savePrePurchaseProduct,
@@ -30,23 +31,24 @@ const PrePurchaseForm = ({ products, shop }) => {
         id: true,
         prePurchaseProduct: true,
       },
-      // send productId as a custom param
-      send: ["id", "productId"],
+      // send collectionIds as custom params
+      send: ["id", "collectionIds"],
     }
   );
 
   // use watch to listen for updates to the form state
-  const updateProductId = watch("shopifyShop.prePurchaseProduct");
-  // save as productId value in form state to send custom param
+  const updateCollectionIds = watch("shopifyShop.prePurchaseProduct") || [];
+  console.log(updateCollectionIds);
+  // save as collectionIds value in form state to send custom params
   useEffect(() => {
-    setValue("productId", updateProductId);
-  }, [updateProductId]);
+    setValue("collectionIds", updateCollectionIds);
+  }, [updateCollectionIds]);
 
   return (
     <Form onSubmit={submit}>
       <FormLayout>
         {formState?.isSubmitSuccessful && (
-          <Banner title="Pre-purchase product saved!" tone="success" />
+          <Banner title="Pre-purchase collections saved!" tone="success" />
         )}
         {error && (
           <Banner title="Error saving selection" tone="critical">
@@ -62,13 +64,16 @@ const PrePurchaseForm = ({ products, shop }) => {
             required
             render={({ field }) => {
               const { ref, ...fieldProps } = field;
+              console.log("field", field);
               return (
                 <Select
-                  label="Product for pre-purchase offer"
-                  placeholder="-No product selected-"
-                  options={products}
+                  label="Collections for pre-purchase offer"
+                  placeholder="-No collection selected-"
+                  options={collections}
                   disabled={formState.isSubmitting}
                   {...fieldProps}
+                  onChange={(value) => field.onChange([...new Set(value)])}
+                  multiple
                 />
               );
             }}
@@ -78,32 +83,43 @@ const PrePurchaseForm = ({ products, shop }) => {
         <Button submit disabled={formState.isSubmitting} variant="primary">
           Save
         </Button>
+
+        {/* {updateCollectionIds.length > 0 && (
+          <Card title="Selected Collections" sectioned>
+            {updateCollectionIds.map((collectionId, index) => {
+              const collection = collections.find(
+                (col) => col.value === collectionId
+              );
+              return (
+                <Card key={crypto.randomUUID()}>
+                  <p>{collection?.label}</p>
+                </Card>
+              );
+            })}
+          </Card>
+        )} */}
       </FormLayout>
     </Form>
   );
 };
 
 export default function () {
-  // use React state to handle selected product and options
-  const [productOptions, setProductOptions] = useState([]);
+  const [collectionOptions, setCollectionOptions] = useState([]);
 
-  // use the Gadget React hooks to fetch products as options for Select component
+  // use the Gadget React hooks to fetch collections as options for Select component
   const [
-    { data: products, fetching: productsFetching, error: productsFetchError },
+    {
+      data: collections,
+      fetching: collectionsFetching,
+      error: collectionsFetchError,
+    },
   ] = useFindMany(api.shopifyCollection, {
     select: {
       id: true,
       title: true,
-      products: {
-        edges: {
-          node: {
-            _all: true,
-          },
-        },
-      },
     },
   });
-  console.log(products);
+
   // get the current shop id (shop tenancy applied automatically, only one shop available)
   const [{ data: shopData, fetching: shopFetching, error: shopFetchError }] =
     useFindFirst(api.shopifyShop, {
@@ -112,32 +128,32 @@ export default function () {
       },
     });
 
-  // a React useEffect hook to build product options for the Select component
+  // a React useEffect hook to build collection options for the Select component
   useEffect(() => {
-    if (products) {
-      const options = products.map((product) => ({
-        value: `gid://shopify/Product/${product.id}`,
-        label: product.title,
+    if (collections) {
+      const options = collections.map((collection) => ({
+        value: `gid://shopify/Collection/${collection.id}`,
+        label: collection.title,
       }));
-      setProductOptions(options);
+      setCollectionOptions(options);
     }
-  }, [products]);
+  }, [collections]);
 
   return (
-    <Page title="Select product for pre-purchase offer">
-      {productsFetching || shopFetching || productOptions.length === 0 ? (
+    <Page title="Select collections for pre-purchase offer">
+      {collectionsFetching || shopFetching || collectionOptions.length === 0 ? (
         <Spinner size="large" />
       ) : (
         <Layout>
-          {(productsFetchError || shopFetchError) && (
+          {(collectionsFetchError || shopFetchError) && (
             <Layout.Section>
               <Banner title="Error loading data" tone="critical">
-                {productsFetchError?.message || shopFetchError?.message}
+                {collectionsFetchError?.message || shopFetchError?.message}
               </Banner>
             </Layout.Section>
           )}
           <Layout.Section>
-            <PrePurchaseForm shop={shopData} products={productOptions} />
+            <PrePurchaseForm shop={shopData} collections={collectionOptions} />
           </Layout.Section>
           <Layout.Section>
             <FooterHelp>

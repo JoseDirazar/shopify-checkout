@@ -1,6 +1,6 @@
 {
   "name": "@gadget-client/checkout-testing",
-  "version": "1.2.0-development.150",
+  "version": "1.2.0-development.166",
   "files": [
     "dist-*/",
     "types",
@@ -37,6 +37,6 @@
   "gadget": {
     "applicationName": "checkout-testing",
     "environmentName": "Development",
-    "environmentVersion": "150"
+    "environmentVersion": "166"
   }
 }

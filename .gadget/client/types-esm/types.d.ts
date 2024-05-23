@@ -683,7 +683,8 @@ export type ShopifyShopFilter = {
     prePurchaseProduct?: StringFilter | null;
 };
 export type BulkSavePrePurchaseProductShopifyShopsInput = {
-    productId?: (Scalars['String'] | null) | null;
+    /** An array of Strings */
+    collectionIds?: ((Scalars['String'] | null))[];
     id: (Scalars['GadgetID'] | null);
 };
 export type AbortShopifySyncInput = {
@@ -701,7 +702,8 @@ export type ShopifyShopBelongsToInput = {
     _link?: (Scalars['GadgetID'] | null) | null;
 };
 export type NestedShopifyShopSavePrePurchaseProductInput = {
-    productId?: (Scalars['String'] | null) | null;
+    /** An array of Strings */
+    collectionIds?: ((Scalars['String'] | null))[];
     id: (Scalars['GadgetID'] | null);
 };
 export type BulkAbortShopifySyncsInput = {

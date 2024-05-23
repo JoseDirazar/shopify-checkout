@@ -180,7 +180,7 @@ const pluralApiIdentifier = "shopifyShops";
    * The flattened style should be preferred over this style, but for models with ambiguous API identifiers, this style can be used to remove any ambiguity.
    **/
   export type FullyQualifiedSavePrePurchaseProductShopifyShopVariables = {
-          productId?: (Scalars['String'] | null) | null,
+          collectionIds?: ((Scalars['String'] | null))[],
       }
 
   /**
@@ -249,10 +249,10 @@ async function savePrePurchaseProductShopifyShop<Options extends SavePrePurchase
           required: true,
           type: "GadgetID",
         },
-                    "productId": {
-          value: newVariables.productId,
+                    "collectionIds": {
+          value: newVariables.collectionIds,
           required: false,
-          type: "String",
+          type: "[String!]",
         },
           },
     options,
@@ -498,15 +498,15 @@ maybeFindFirst: {
         required: true,
         type: "GadgetID",
       },
-      "productId": {
+      "collectionIds": {
         required: false,
-        type: "String",
+        type: "[String!]",
       },
     },
     hasAmbiguousIdentifier: false,
     /** @deprecated -- effects are dead, long live AAC */
     hasCreateOrUpdateEffect: false,
-    paramOnlyVariables: ["productId"],
+    paramOnlyVariables: ["collectionIds"],
     hasReturnType: false,
     acceptsModelInput: false,
   } as unknown as {
@@ -533,15 +533,15 @@ maybeFindFirst: {
           required: true;
           type: "GadgetID";
         };
-                    "productId": {
+                    "collectionIds": {
           required: false;
-          type: "String";
+          type: "[String!]";
         };
           };
     hasAmbiguousIdentifier: false;
     /** @deprecated -- effects are dead, long live AAC */
     hasCreateOrUpdateEffect: false;
-    paramOnlyVariables: ["productId"];
+    paramOnlyVariables: ["collectionIds"];
     hasReturnType: false;
     acceptsModelInput: false;
   }

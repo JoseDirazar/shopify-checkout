@@ -128,7 +128,7 @@ export interface SavePrePurchaseProductShopifyShopOptions {
  * The flattened style should be preferred over this style, but for models with ambiguous API identifiers, this style can be used to remove any ambiguity.
  **/
 export type FullyQualifiedSavePrePurchaseProductShopifyShopVariables = {
-    productId?: (Scalars['String'] | null) | null;
+    collectionIds?: ((Scalars['String'] | null))[];
 };
 /**
  * The inputs for executing savePrePurchaseProduct on shopifyShop.
@@ -235,15 +235,15 @@ export declare class ShopifyShopManager {
                 required: true;
                 type: "GadgetID";
             };
-            "productId": {
+            "collectionIds": {
                 required: false;
-                type: "String";
+                type: "[String!]";
             };
         };
         hasAmbiguousIdentifier: false;
         /** @deprecated -- effects are dead, long live AAC */
         hasCreateOrUpdateEffect: false;
-        paramOnlyVariables: ["productId"];
+        paramOnlyVariables: ["collectionIds"];
         hasReturnType: false;
         acceptsModelInput: false;
     };

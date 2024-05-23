@@ -1198,7 +1198,8 @@ export type ShopifyShopFilter = {
 
 export type BulkSavePrePurchaseProductShopifyShopsInput = {
 
-  productId?: (Scalars['String'] | null) | null;
+  /** An array of Strings */
+  collectionIds?: ((Scalars['String'] | null))[];
 
   id: (Scalars['GadgetID'] | null);
 };
@@ -1236,7 +1237,8 @@ export type ShopifyShopBelongsToInput = {
 
 export type NestedShopifyShopSavePrePurchaseProductInput = {
 
-  productId?: (Scalars['String'] | null) | null;
+  /** An array of Strings */
+  collectionIds?: ((Scalars['String'] | null))[];
 
   id: (Scalars['GadgetID'] | null);
 };

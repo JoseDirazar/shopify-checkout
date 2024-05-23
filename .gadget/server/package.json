@@ -22,7 +22,7 @@
   "gadget": {
     "applicationName": "checkout-testing",
     "environmentName": "Development",
-    "environmentVersion": "150"
+    "environmentVersion": "166"
   },
   "name": "gadget-server",
   "peerDependencies": {
@@ -31,5 +31,5 @@
   "private": true,
   "scripts": {},
   "types": "types/index.d.ts",
-  "version": "1.2.0-development.150"
+  "version": "1.2.0-development.166"
 }
