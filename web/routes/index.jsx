@@ -16,6 +16,13 @@ import {
   Button,
   FormLayout,
   SkeletonDisplayText,
+  ResourceList,
+  ResourceItem,
+  Text,
+  Card,
+  Thumbnail,
+  TextContainer,
+  BlockStack,
 } from "@shopify/polaris";
 import { api } from "../api";
 import { useEffect, useState } from "react";
@@ -42,8 +49,51 @@ const PrePurchaseForm = ({ products, shop }) => {
     setValue("productId", updateProductId);
   }, [updateProductId]);
 
+  const [selectedProducts, setSelectedProducts] = useState([]);
+
+  useEffect(() => {
+    if (updateProductId) {
+      const selectedProduct = products.find(
+        (product) => product.value === updateProductId
+      );
+      setSelectedProducts((prev) => [...prev, selectedProduct]);
+    }
+  }, [updateProductId]);
+
   return (
     <Form onSubmit={submit}>
+      <ResourceList
+        resourceName={{ singular: "blog post", plural: "blog posts" }}
+        items={selectedProducts}
+        selectable
+        renderItem={(item) => {
+          const { id, title } = item;
+          return (
+            <ResourceItem
+              id={id}
+              accessibilityLabel={`View details for ${title}`}
+              name={title}
+            >
+              <Text variant="bodyMd" fontWeight="bold" as="h3">
+                {title}
+              </Text>
+            </ResourceItem>
+          );
+        }}
+      />
+      {selectedProducts.length > 0 && (
+        <Card title="Selected Products" sectioned>
+          {selectedProducts.map((product, index) => (
+            <BlockStack key={index} alignment="center">
+              <Thumbnail source={product.image.source} alt={product.label} />
+              <TextContainer>
+                <p>{product.label}</p>
+                <p>{product.price}</p>
+              </TextContainer>
+            </BlockStack>
+          ))}
+        </Card>
+      )}
       <FormLayout>
         {formState?.isSubmitSuccessful && (
           <Banner title="Pre-purchase product saved!" tone="success" />
@@ -94,6 +144,13 @@ export default function () {
     select: {
       id: true,
       title: true,
+      images: {
+        edges: {
+          nodes: {
+            source: true,
+          },
+        },
+      },
       variants: {
         edges: {
           node: {
