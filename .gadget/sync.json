@@ -3,10 +3,10 @@
   "environment": "development",
   "environments": {
     "development": {
-      "filesVersion": "439"
+      "filesVersion": "654"
     }
   },
   "app": "checkout-testing",
-  "filesVersion": "439",
-  "mtime": 1716532067525
+  "filesVersion": "654",
+  "mtime": 1716590619703
 }

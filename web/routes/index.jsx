@@ -29,17 +29,19 @@ const PrePurchaseForm = ({ products, shop }) => {
         prePurchaseProduct: true,
       },
       // send productId as a custom param
-      send: ["id", "productId"],
+      send: ["id", "collectionId"],
     }
   );
+  console.log(formState?.isSubmitSuccessful);
   // use watch to listen for updates to the form state
   const updateProductId = watch("shopifyShop.prePurchaseProduct");
   // save as productId value in form state to send custom param
+  console.log(updateProductId);
   useEffect(() => {
-    setValue("productId", updateProductId);
+    setValue("collectionId", updateProductId);
   }, [updateProductId]);
-  console.log("error", error);
-  console.log("products", products);
+  //console.log("error", error);
+  //console.log("products", products);
   return (
     <Form onSubmit={submit}>
       <FormLayout>
@@ -60,6 +62,7 @@ const PrePurchaseForm = ({ products, shop }) => {
             required
             render={({ field }) => {
               const { ref, ...fieldProps } = field;
+              console.log("wawa", fieldProps.value);
               return (
                 <Select
                   label="Product for pre-purchase offer"
@@ -96,7 +99,7 @@ export default function () {
         id: true,
       },
     });
-  console.log(products);
+  //console.log(products);
   // a React useEffect hook to build product options for the Select component
   useEffect(() => {
     if (products) {

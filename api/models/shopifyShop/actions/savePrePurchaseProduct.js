@@ -18,13 +18,13 @@ export async function run({ params, record, logger, connections }) {
   // save the selected pre-purchase collection in a SHOP-owned metafield
   // https://www.npmjs.com/package/shopify-api-node#metafields
   const response = await connections.shopify.current?.metafield.create({
-    key: "pre-purchase-collection",
+    key: "pre-purchase-product",
     namespace: "gadget-tutorial",
     owner_id: record.id,
     type: "collection_reference",
     value: collectionId,
   });
-
+  //console.log(response);
   // print to the Gadget Logs
   logger.info({ response }, "add metafields response");
 }
