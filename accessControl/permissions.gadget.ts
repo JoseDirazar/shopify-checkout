@@ -56,10 +56,6 @@ export const permissions: GadgetPermissions = {
           },
         },
         shopifyProductImage: {
-          read: {
-            filter:
-              "accessControl/filters/shopify/shopifyProductImage.gelly",
-          },
           actions: {
             create: true,
             delete: true,

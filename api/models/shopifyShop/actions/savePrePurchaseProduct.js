@@ -12,29 +12,26 @@ export async function run({ params, record, logger, connections }) {
   applyParams(params, record);
   await preventCrossShopDataAccess(params, record);
 
-  // get the collectionIds passed in as custom params
-  const { collectionIds } = params;
-  console.log(collectionIds);
-  // save each selected pre-purchase collection in a SHOP-owned metafield
-  const responses = await Promise.all(
-    collectionIds.map((collectionId) =>
-      connections.shopify.current?.metafield.create({
-        key: `pre-purchase-collection-${collectionId}`,
-        namespace: "gadget-tutorial",
-        owner_id: record.id,
-        type: "collection_reference",
-        value: collectionId,
-      })
-    )
-  );
+  // get the collection id passed in as a custom param
+  const { collectionId } = params;
 
-  console.log(responses);
-  logger.info({ responses }, "add metafields responses");
+  // save the selected pre-purchase collection in a SHOP-owned metafield
+  // https://www.npmjs.com/package/shopify-api-node#metafields
+  const response = await connections.shopify.current?.metafield.create({
+    key: "pre-purchase-collection",
+    namespace: "gadget-tutorial",
+    owner_id: record.id,
+    type: "collection_reference",
+    value: collectionId,
+  });
+
+  // print to the Gadget Logs
+  logger.info({ response }, "add metafields response");
 }
 
-// define a collectionIds custom param for this action
+// define a collectionId custom param for this action
 export const params = {
-  collectionIds: { type: "array", items: { type: "string" } },
+  collectionId: { type: "string" },
 };
 
 /** @type { ActionOptions } */

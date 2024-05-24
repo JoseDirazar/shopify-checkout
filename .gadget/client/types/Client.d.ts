@@ -11,8 +11,8 @@ import { ShopifyShopManager } from "./models/ShopifyShop.js";
 import { ShopifySyncManager } from "./models/ShopifySync.js";
 import { ShopifyCollectionManager } from "./models/ShopifyCollection.js";
 import { ShopifyProductVariantManager } from "./models/ShopifyProductVariant.js";
-import { ShopifyProductImageManager } from "./models/ShopifyProductImage.js";
 import { ShopifyCollectManager } from "./models/ShopifyCollect.js";
+import { ShopifyProductImageManager } from "./models/ShopifyProductImage.js";
 import { CurrentSessionManager } from "./models/CurrentSession.js";
 type InternalModelManagers = {
     session: InternalModelManager;
@@ -22,8 +22,8 @@ type InternalModelManagers = {
     shopifySync: InternalModelManager;
     shopifyCollection: InternalModelManager;
     shopifyProductVariant: InternalModelManager;
-    shopifyProductImage: InternalModelManager;
     shopifyCollect: InternalModelManager;
+    shopifyProductImage: InternalModelManager;
 };
 type ClientOptions = Omit<ApiClientOptions, "environment"> & {
     environment?: string;
@@ -42,8 +42,8 @@ export declare class Client implements AnyClient {
     shopifySync: ShopifySyncManager;
     shopifyCollection: ShopifyCollectionManager;
     shopifyProductVariant: ShopifyProductVariantManager;
-    shopifyProductImage: ShopifyProductImageManager;
     shopifyCollect: ShopifyCollectManager;
+    shopifyProductImage: ShopifyProductImageManager;
     currentSession: CurrentSessionManager;
     /**
     * Namespaced object for accessing models via the Gadget internal APIs, which provide lower level and higher privileged operations directly against the database. Useful for maintenance operations like migrations or correcting broken data, and for implementing the high level actions.
@@ -160,8 +160,8 @@ export declare class Client implements AnyClient {
                 model: string;
             };
         };
-        shopifyProductImage: {
-            variants: {
+        shopifyCollect: {
+            customCollection: {
                 type: string;
                 model: string;
             };
@@ -174,8 +174,8 @@ export declare class Client implements AnyClient {
                 model: string;
             };
         };
-        shopifyCollect: {
-            customCollection: {
+        shopifyProductImage: {
+            variants: {
                 type: string;
                 model: string;
             };

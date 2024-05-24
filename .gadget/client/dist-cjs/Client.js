@@ -31,8 +31,8 @@ var import_ShopifyShop = require("./models/ShopifyShop.js");
 var import_ShopifySync = require("./models/ShopifySync.js");
 var import_ShopifyCollection = require("./models/ShopifyCollection.js");
 var import_ShopifyProductVariant = require("./models/ShopifyProductVariant.js");
-var import_ShopifyProductImage = require("./models/ShopifyProductImage.js");
 var import_ShopifyCollect = require("./models/ShopifyCollect.js");
+var import_ShopifyProductImage = require("./models/ShopifyProductImage.js");
 var import_CurrentSession = require("./models/CurrentSession.js");
 var import_api_client_core3 = require("@gadgetinc/api-client-core");
 var _a;
@@ -53,7 +53,7 @@ class Client {
      */
     this.apiRoots = { "development": "https://checkout-testing--development.gadget.app/", "production": "https://checkout-testing.gadget.app/" };
     this.applicationId = "121673";
-    this[_a] = { "session": { "shop": { "type": "BelongsTo", "model": "shopifyShop" } }, "shopifyGdprRequest": { "shop": { "type": "BelongsTo", "model": "shopifyShop" } }, "shopifyProduct": { "images": { "type": "HasMany", "model": "shopifyProductImage" }, "variants": { "type": "HasMany", "model": "shopifyProductVariant" }, "customCollections": { "type": "HasManyThrough", "model": "shopifyCollection", "through": "shopifyCollect" }, "shopifyCollects": { "model": "shopifyCollect", "type": "HasMany" }, "shop": { "type": "BelongsTo", "model": "shopifyShop" } }, "shopifyShop": { "products": { "type": "HasMany", "model": "shopifyProduct" }, "collections": { "type": "HasMany", "model": "shopifyCollection" }, "syncs": { "type": "HasMany", "model": "shopifySync" }, "productVariants": { "type": "HasMany", "model": "shopifyProductVariant" }, "gdprRequests": { "type": "HasMany", "model": "shopifyGdprRequest" }, "productImages": { "type": "HasMany", "model": "shopifyProductImage" }, "collects": { "type": "HasMany", "model": "shopifyCollect" } }, "shopifySync": { "shop": { "type": "BelongsTo", "model": "shopifyShop" } }, "shopifyCollection": { "products": { "type": "HasManyThrough", "model": "shopifyProduct", "through": "shopifyCollect" }, "shopifyCollects": { "model": "shopifyCollect", "type": "HasMany" }, "shop": { "type": "BelongsTo", "model": "shopifyShop" } }, "shopifyProductVariant": { "product": { "type": "BelongsTo", "model": "shopifyProduct" }, "productImage": { "type": "BelongsTo", "model": "shopifyProductImage" }, "shop": { "type": "BelongsTo", "model": "shopifyShop" } }, "shopifyProductImage": { "variants": { "type": "HasMany", "model": "shopifyProductVariant" }, "product": { "type": "BelongsTo", "model": "shopifyProduct" }, "shop": { "type": "BelongsTo", "model": "shopifyShop" } }, "shopifyCollect": { "customCollection": { "type": "BelongsTo", "model": "shopifyCollection" }, "product": { "type": "BelongsTo", "model": "shopifyProduct" }, "shop": { "type": "BelongsTo", "model": "shopifyShop" } } };
+    this[_a] = { "session": { "shop": { "type": "BelongsTo", "model": "shopifyShop" } }, "shopifyGdprRequest": { "shop": { "type": "BelongsTo", "model": "shopifyShop" } }, "shopifyProduct": { "images": { "type": "HasMany", "model": "shopifyProductImage" }, "variants": { "type": "HasMany", "model": "shopifyProductVariant" }, "customCollections": { "type": "HasManyThrough", "model": "shopifyCollection", "through": "shopifyCollect" }, "shopifyCollects": { "model": "shopifyCollect", "type": "HasMany" }, "shop": { "type": "BelongsTo", "model": "shopifyShop" } }, "shopifyShop": { "products": { "type": "HasMany", "model": "shopifyProduct" }, "collections": { "type": "HasMany", "model": "shopifyCollection" }, "syncs": { "type": "HasMany", "model": "shopifySync" }, "productVariants": { "type": "HasMany", "model": "shopifyProductVariant" }, "gdprRequests": { "type": "HasMany", "model": "shopifyGdprRequest" }, "productImages": { "type": "HasMany", "model": "shopifyProductImage" }, "collects": { "type": "HasMany", "model": "shopifyCollect" } }, "shopifySync": { "shop": { "type": "BelongsTo", "model": "shopifyShop" } }, "shopifyCollection": { "products": { "type": "HasManyThrough", "model": "shopifyProduct", "through": "shopifyCollect" }, "shopifyCollects": { "model": "shopifyCollect", "type": "HasMany" }, "shop": { "type": "BelongsTo", "model": "shopifyShop" } }, "shopifyProductVariant": { "product": { "type": "BelongsTo", "model": "shopifyProduct" }, "productImage": { "type": "BelongsTo", "model": "shopifyProductImage" }, "shop": { "type": "BelongsTo", "model": "shopifyShop" } }, "shopifyCollect": { "customCollection": { "type": "BelongsTo", "model": "shopifyCollection" }, "product": { "type": "BelongsTo", "model": "shopifyProduct" }, "shop": { "type": "BelongsTo", "model": "shopifyShop" } }, "shopifyProductImage": { "variants": { "type": "HasMany", "model": "shopifyProductVariant" }, "product": { "type": "BelongsTo", "model": "shopifyProduct" }, "shop": { "type": "BelongsTo", "model": "shopifyShop" } } };
     /** Executes the scheduledShopifySync global action. */
     this.scheduledShopifySync = Object.assign(
       async (variables) => {
@@ -186,8 +186,8 @@ class Client {
     this.shopifySync = new import_ShopifySync.ShopifySyncManager(this.connection);
     this.shopifyCollection = new import_ShopifyCollection.ShopifyCollectionManager(this.connection);
     this.shopifyProductVariant = new import_ShopifyProductVariant.ShopifyProductVariantManager(this.connection);
-    this.shopifyProductImage = new import_ShopifyProductImage.ShopifyProductImageManager(this.connection);
     this.shopifyCollect = new import_ShopifyCollect.ShopifyCollectManager(this.connection);
+    this.shopifyProductImage = new import_ShopifyProductImage.ShopifyProductImageManager(this.connection);
     this.currentSession = new import_CurrentSession.CurrentSessionManager(this.connection);
     this.internal = {
       session: new import_api_client_core.InternalModelManager("session", this.connection, {
@@ -225,13 +225,13 @@ class Client {
         // @ts-ignore
         hasAmbiguousIdentifier: false
       }),
-      shopifyProductImage: new import_api_client_core.InternalModelManager("shopifyProductImage", this.connection, {
-        pluralApiIdentifier: "shopifyProductImages",
+      shopifyCollect: new import_api_client_core.InternalModelManager("shopifyCollect", this.connection, {
+        pluralApiIdentifier: "shopifyCollects",
         // @ts-ignore
         hasAmbiguousIdentifier: false
       }),
-      shopifyCollect: new import_api_client_core.InternalModelManager("shopifyCollect", this.connection, {
-        pluralApiIdentifier: "shopifyCollects",
+      shopifyProductImage: new import_api_client_core.InternalModelManager("shopifyProductImage", this.connection, {
+        pluralApiIdentifier: "shopifyProductImages",
         // @ts-ignore
         hasAmbiguousIdentifier: false
       })

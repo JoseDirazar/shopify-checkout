@@ -6,9 +6,7 @@ import {
 } from "@gadgetinc/react";
 import {
   Banner,
-  FooterHelp,
   Layout,
-  Link,
   Page,
   Select,
   Spinner,
@@ -16,12 +14,11 @@ import {
   Button,
   FormLayout,
   SkeletonDisplayText,
-  Card,
 } from "@shopify/polaris";
 import { api } from "../api";
 import { useEffect, useState } from "react";
 
-const PrePurchaseForm = ({ collections, shop }) => {
+const PrePurchaseForm = ({ products, shop }) => {
   // useActionForm used to handle form state and submission
   const { submit, control, formState, error, setValue, watch } = useActionForm(
     api.shopifyShop.savePrePurchaseProduct,
@@ -31,24 +28,23 @@ const PrePurchaseForm = ({ collections, shop }) => {
         id: true,
         prePurchaseProduct: true,
       },
-      // send collectionIds as custom params
-      send: ["id", "collectionIds"],
+      // send productId as a custom param
+      send: ["id", "productId"],
     }
   );
-
   // use watch to listen for updates to the form state
-  const updateCollectionIds = watch("shopifyShop.prePurchaseProduct") || [];
-  console.log(updateCollectionIds);
-  // save as collectionIds value in form state to send custom params
+  const updateProductId = watch("shopifyShop.prePurchaseProduct");
+  // save as productId value in form state to send custom param
   useEffect(() => {
-    setValue("collectionIds", updateCollectionIds);
-  }, [updateCollectionIds]);
-
+    setValue("productId", updateProductId);
+  }, [updateProductId]);
+  console.log("error", error);
+  console.log("products", products);
   return (
     <Form onSubmit={submit}>
       <FormLayout>
         {formState?.isSubmitSuccessful && (
-          <Banner title="Pre-purchase collections saved!" tone="success" />
+          <Banner title="Pre-purchase product saved!" tone="success" />
         )}
         {error && (
           <Banner title="Error saving selection" tone="critical">
@@ -64,16 +60,13 @@ const PrePurchaseForm = ({ collections, shop }) => {
             required
             render={({ field }) => {
               const { ref, ...fieldProps } = field;
-              console.log("field", field);
               return (
                 <Select
-                  label="Collections for pre-purchase offer"
-                  placeholder="-No collection selected-"
-                  options={collections}
+                  label="Product for pre-purchase offer"
+                  placeholder="-No product selected-"
+                  options={products}
                   disabled={formState.isSubmitting}
                   {...fieldProps}
-                  onChange={(value) => field.onChange([...new Set(value)])}
-                  multiple
                 />
               );
             }}
@@ -83,43 +76,19 @@ const PrePurchaseForm = ({ collections, shop }) => {
         <Button submit disabled={formState.isSubmitting} variant="primary">
           Save
         </Button>
-
-        {/* {updateCollectionIds.length > 0 && (
-          <Card title="Selected Collections" sectioned>
-            {updateCollectionIds.map((collectionId, index) => {
-              const collection = collections.find(
-                (col) => col.value === collectionId
-              );
-              return (
-                <Card key={crypto.randomUUID()}>
-                  <p>{collection?.label}</p>
-                </Card>
-              );
-            })}
-          </Card>
-        )} */}
       </FormLayout>
     </Form>
   );
 };
 
 export default function () {
-  const [collectionOptions, setCollectionOptions] = useState([]);
+  // use React state to handle selected product and options
+  const [productOptions, setProductOptions] = useState([]);
 
-  // use the Gadget React hooks to fetch collections as options for Select component
+  // use the Gadget React hooks to fetch products as options for Select component
   const [
-    {
-      data: collections,
-      fetching: collectionsFetching,
-      error: collectionsFetchError,
-    },
-  ] = useFindMany(api.shopifyCollection, {
-    select: {
-      id: true,
-      title: true,
-    },
-  });
-
+    { data: products, fetching: productsFetching, error: productsFetchError },
+  ] = useFindMany(api.shopifyCollection);
   // get the current shop id (shop tenancy applied automatically, only one shop available)
   const [{ data: shopData, fetching: shopFetching, error: shopFetchError }] =
     useFindFirst(api.shopifyShop, {
@@ -127,43 +96,33 @@ export default function () {
         id: true,
       },
     });
-
-  // a React useEffect hook to build collection options for the Select component
+  console.log(products);
+  // a React useEffect hook to build product options for the Select component
   useEffect(() => {
-    if (collections) {
-      const options = collections.map((collection) => ({
-        value: `gid://shopify/Collection/${collection.id}`,
-        label: collection.title,
+    if (products) {
+      const options = products.map((product) => ({
+        value: `gid://shopify/Collection/${product.id}`,
+        label: product.title,
       }));
-      setCollectionOptions(options);
+      setProductOptions(options);
     }
-  }, [collections]);
+  }, [products]);
 
   return (
-    <Page title="Select collections for pre-purchase offer">
-      {collectionsFetching || shopFetching || collectionOptions.length === 0 ? (
+    <Page title="Select product for pre-purchase offer">
+      {productsFetching || shopFetching || productOptions.length === 0 ? (
         <Spinner size="large" />
       ) : (
         <Layout>
-          {(collectionsFetchError || shopFetchError) && (
+          {(productsFetchError || shopFetchError) && (
             <Layout.Section>
               <Banner title="Error loading data" tone="critical">
-                {collectionsFetchError?.message || shopFetchError?.message}
+                {productsFetchError?.message || shopFetchError?.message}
               </Banner>
             </Layout.Section>
           )}
           <Layout.Section>
-            <PrePurchaseForm shop={shopData} collections={collectionOptions} />
-          </Layout.Section>
-          <Layout.Section>
-            <FooterHelp>
-              <p>
-                Powered by{" "}
-                <Link url="https://gadget.dev" external>
-                  gadget.dev
-                </Link>
-              </p>
-            </FooterHelp>
+            <PrePurchaseForm shop={shopData} products={productOptions} />
           </Layout.Section>
         </Layout>
       )}

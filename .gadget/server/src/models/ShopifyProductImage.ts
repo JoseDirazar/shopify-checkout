@@ -1,4 +1,4 @@
-// All the generated types for the "Shopify Product Image" model preconditions, actions, params, etc
+// All the generated types for the "shopifyProductImage" model preconditions, actions, params, etc
 import { AmbientContext } from "../AmbientContext";
 import { ActionExecutionScope, NotYetTyped, ValidationErrors, ActionTrigger } from "../types";
 import { GadgetRecord, ShopifyProductImage } from "@gadget-client/checkout-testing";
@@ -8,10 +8,10 @@ export type DefaultShopifyProductImageServerSelection = {
       readonly id: true;
       readonly createdAt: true;
       readonly updatedAt: true;
-      readonly variants: false;
       readonly alt: true;
       readonly shopifyCreatedAt: true;
       readonly height: true;
+      readonly variants: false;
       readonly position: true;
       readonly source: true;
       readonly shopifyUpdatedAt: true;

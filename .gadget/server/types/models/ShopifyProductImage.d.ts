@@ -7,10 +7,10 @@ export type DefaultShopifyProductImageServerSelection = {
     readonly id: true;
     readonly createdAt: true;
     readonly updatedAt: true;
-    readonly variants: false;
     readonly alt: true;
     readonly shopifyCreatedAt: true;
     readonly height: true;
+    readonly variants: false;
     readonly position: true;
     readonly source: true;
     readonly shopifyUpdatedAt: true;

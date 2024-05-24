@@ -180,7 +180,7 @@ export interface SavePrePurchaseProductShopifyShopActionContext extends AmbientC
     * An object containing the incoming data(this models fields) passed by triggers or user inputs.
     */
     params: {
-        collectionIds?: string[];
+        collectionId?: string;
     };
     /**
     * @private The context of this action.
