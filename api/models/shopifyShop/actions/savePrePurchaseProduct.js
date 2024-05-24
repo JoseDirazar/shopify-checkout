@@ -21,7 +21,7 @@ export async function run({ params, record, logger, connections }) {
     key: "pre-purchase-collection",
     namespace: "gadget-tutorial",
     owner_id: record.id,
-    type: "collection_reference",
+    type: "json",
     value: collectionId,
   });
 

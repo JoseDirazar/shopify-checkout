@@ -60,6 +60,7 @@ const PrePurchaseForm = ({ products, shop }) => {
             required
             render={({ field }) => {
               const { ref, ...fieldProps } = field;
+              console.log("field", field);
               return (
                 <Select
                   label="Product for pre-purchase offer"
