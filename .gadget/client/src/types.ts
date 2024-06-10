@@ -100,10 +100,10 @@ export type InternalShopifyCollectRecord = Scalars["JSONObject"];
 export type InternalShopifyProductImageRecord = Scalars["JSONObject"];
 
 
-export type BackgroundActionResult = AvailableScheduledShopifySyncResultSelection | AvailableSavePrePurchaseProductShopifyShopResultSelection | AvailableAbortShopifySyncResultSelection | AvailableCompleteShopifySyncResultSelection | AvailableErrorShopifySyncResultSelection | AvailableRunShopifySyncResultSelection;
+export type BackgroundActionResult = AvailableScheduledShopifySyncResultSelection | AvailableSaveBannerTitleShopifyShopResultSelection | AvailableSavePrePurchaseProductShopifyShopResultSelection | AvailableAbortShopifySyncResultSelection | AvailableCompleteShopifySyncResultSelection | AvailableErrorShopifySyncResultSelection | AvailableRunShopifySyncResultSelection;
 
 
-export type AvailableBackgroundActionResultSelection = ScheduledShopifySyncResult | SavePrePurchaseProductShopifyShopResult | AbortShopifySyncResult | CompleteShopifySyncResult | ErrorShopifySyncResult | RunShopifySyncResult;
+export type AvailableBackgroundActionResultSelection = ScheduledShopifySyncResult | SaveBannerTitleShopifyShopResult | SavePrePurchaseProductShopifyShopResult | AbortShopifySyncResult | CompleteShopifySyncResult | ErrorShopifySyncResult | RunShopifySyncResult;
 
 
 
@@ -1053,6 +1053,12 @@ export type ShopifyShopSort = {
 
   /** Sort the results by the prePurchaseProduct field. Defaults to ascending (smallest value first). */
   prePurchaseProduct?: SortOrder | null;
+
+  /** Sort the results by the bannerTitle field. Defaults to ascending (smallest value first). */
+  bannerTitle?: SortOrder | null;
+
+  /** Sort the results by the bannerMessage field. Defaults to ascending (smallest value first). */
+  bannerMessage?: SortOrder | null;
 };
 
 
@@ -1192,6 +1198,19 @@ export type ShopifyShopFilter = {
   zipCode?: StringFilter | null;
 
   prePurchaseProduct?: StringFilter | null;
+
+  bannerTitle?: StringFilter | null;
+
+  bannerMessage?: StringFilter | null;
+};
+
+
+
+export type BulkSaveBannerTitleShopifyShopsInput = {
+
+  bannerTitle?: (Scalars['String'] | null) | null;
+
+  id: (Scalars['GadgetID'] | null);
 };
 
 
@@ -1226,10 +1245,21 @@ export type AbortShopifySyncInput = {
 
 export type ShopifyShopBelongsToInput = {
 
+  saveBannerTitle?: NestedShopifyShopSaveBannerTitleInput | null;
+
   savePrePurchaseProduct?: NestedShopifyShopSavePrePurchaseProductInput | null;
 
   /** Existing ID of another record, which you would like to associate this record with */
   _link?: (Scalars['GadgetID'] | null) | null;
+};
+
+
+
+export type NestedShopifyShopSaveBannerTitleInput = {
+
+  bannerTitle?: (Scalars['String'] | null) | null;
+
+  id: (Scalars['GadgetID'] | null);
 };
 
 
@@ -1624,6 +1654,10 @@ export type InternalShopifyShopInput = {
   zipCode?: (Scalars['String'] | null) | null;
 
   prePurchaseProduct?: (Scalars['String'] | null) | null;
+
+  bannerTitle?: (Scalars['String'] | null) | null;
+
+  bannerMessage?: (Scalars['String'] | null) | null;
 
   /** An optional list of atomically applied commands for race-safe mutations of the record */
   _atomics?: InternalShopifyShopAtomicsInput | null;
@@ -3013,6 +3047,10 @@ export type ShopifyShop = {
 
   collects: ShopifyCollectConnection;
 
+  bannerTitle: (Scalars['String'] | null);
+
+  bannerMessage: (Scalars['String'] | null);
+
   /** Get all the fields for this record. Useful for not having to list out all the fields you want to retrieve, but slower. */
   _all: Scalars['JSONObject'];
 };
@@ -3171,6 +3209,10 @@ export type AvailableShopifyShopSelection = {
   productImages?: AvailableShopifyProductImageConnectionSelection;
 
   collects?: AvailableShopifyCollectConnectionSelection;
+
+  bannerTitle?: boolean | null | undefined;
+
+  bannerMessage?: boolean | null | undefined;
 
   /** Get all the fields for this record. Useful for not having to list out all the fields you want to retrieve, but slower. */
   _all?: boolean | null | undefined;
@@ -5094,6 +5136,10 @@ export type Mutation = {
 
   __typename: 'Mutation';
 
+  saveBannerTitleShopifyShop: (SaveBannerTitleShopifyShopResult | null);
+
+  bulkSaveBannerTitleShopifyShops: (BulkSaveBannerTitleShopifyShopsResult | null);
+
   savePrePurchaseProductShopifyShop: (SavePrePurchaseProductShopifyShopResult | null);
 
   bulkSavePrePurchaseProductShopifyShops: (BulkSavePrePurchaseProductShopifyShopsResult | null);
@@ -5129,6 +5175,10 @@ export type AvailableMutationSelection = {
 
   __typename?: boolean | null | undefined;
 
+  saveBannerTitleShopifyShop?: AvailableSaveBannerTitleShopifyShopResultSelection;
+
+  bulkSaveBannerTitleShopifyShops?: AvailableBulkSaveBannerTitleShopifyShopsResultSelection;
+
   savePrePurchaseProductShopifyShop?: AvailableSavePrePurchaseProductShopifyShopResultSelection;
 
   bulkSavePrePurchaseProductShopifyShops?: AvailableBulkSavePrePurchaseProductShopifyShopsResultSelection;
@@ -5156,6 +5206,64 @@ export type AvailableMutationSelection = {
   background?: AvailableBackgroundMutationsSelection;
 
   internal?: AvailableInternalMutationsSelection;
+};
+
+
+
+export type SaveBannerTitleShopifyShopResult = {
+
+  __typename: 'SaveBannerTitleShopifyShopResult';
+
+  success: Scalars['Boolean'];
+
+  errors: ExecutionError[];
+
+  shopifyShop: (ShopifyShop | null);
+};
+
+
+
+export type AvailableSaveBannerTitleShopifyShopResultSelection = {
+
+  __typename?: boolean | null | undefined;
+
+  success?: boolean | null | undefined;
+
+  errors?: AvailableExecutionErrorSelection;
+
+  shopifyShop?: AvailableShopifyShopSelection;
+};
+
+
+/** The output when running the saveBannerTitle on the shopifyShop model in bulk. */
+export type BulkSaveBannerTitleShopifyShopsResult = {
+
+  __typename: 'BulkSaveBannerTitleShopifyShopsResult';
+
+  /** Boolean describing if all the bulk actions succeeded or not */
+  success: Scalars['Boolean'];
+
+  /** Aggregated list of errors that any bulk action encountered while processing */
+  errors: ExecutionError[];
+
+  /** The list of all changed shopifyShop records by each sent bulk action. Returned in the same order as the input bulk action params. */
+  shopifyShops: (ShopifyShop | null)[];
+};
+
+
+
+export type AvailableBulkSaveBannerTitleShopifyShopsResultSelection = {
+
+  __typename?: boolean | null | undefined;
+
+  /** Boolean describing if all the bulk actions succeeded or not */
+  success?: boolean | null | undefined;
+
+  /** Aggregated list of errors that any bulk action encountered while processing */
+  errors?: AvailableExecutionErrorSelection;
+
+  /** The list of all changed shopifyShop records by each sent bulk action. Returned in the same order as the input bulk action params. */
+  shopifyShops?: AvailableShopifyShopSelection;
 };
 
 
@@ -5524,6 +5632,10 @@ export type BackgroundMutations = {
 
   __typename: 'BackgroundMutations';
 
+  saveBannerTitleShopifyShop: EnqueueBackgroundActionResult;
+
+  bulkSaveBannerTitleShopifyShops: BulkEnqueueBackgroundActionResult;
+
   savePrePurchaseProductShopifyShop: EnqueueBackgroundActionResult;
 
   bulkSavePrePurchaseProductShopifyShops: BulkEnqueueBackgroundActionResult;
@@ -5552,6 +5664,10 @@ export type BackgroundMutations = {
 export type AvailableBackgroundMutationsSelection = {
 
   __typename?: boolean | null | undefined;
+
+  saveBannerTitleShopifyShop?: AvailableEnqueueBackgroundActionResultSelection;
+
+  bulkSaveBannerTitleShopifyShops?: AvailableBulkEnqueueBackgroundActionResultSelection;
 
   savePrePurchaseProductShopifyShop?: AvailableEnqueueBackgroundActionResultSelection;
 
@@ -5719,6 +5835,8 @@ export type InternalMutations = {
 
   triggerReinstallShopifyShop: (ReinstallShopifyShopResult | null);
 
+  triggerSaveBannerTitleShopifyShop: (SaveBannerTitleShopifyShopResult | null);
+
   triggerSavePrePurchaseProductShopifyShop: (SavePrePurchaseProductShopifyShopResult | null);
 
   triggerUninstallShopifyShop: (UninstallShopifyShopResult | null);
@@ -5878,6 +5996,8 @@ export type AvailableInternalMutationsSelection = {
   triggerInstallShopifyShop?: AvailableInstallShopifyShopResultSelection;
 
   triggerReinstallShopifyShop?: AvailableReinstallShopifyShopResultSelection;
+
+  triggerSaveBannerTitleShopifyShop?: AvailableSaveBannerTitleShopifyShopResultSelection;
 
   triggerSavePrePurchaseProductShopifyShop?: AvailableSavePrePurchaseProductShopifyShopResultSelection;
 

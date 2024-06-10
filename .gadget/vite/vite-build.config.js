@@ -18,6 +18,18 @@ const newConfig = async () => {
 
   config.plugins = config.plugins ? config.plugins : [];
   
+  config.plugins.push({
+    name: "gadget-shopify",
+    order: "post",
+    transformIndexHtml: () => [{
+      tag: "script",
+      attrs: {
+        src: `https://cdn.shopify.com/shopifycloud/app-bridge.js`,
+        "data-api-key": "%SHOPIFY_API_KEY%",
+      },
+    }]
+  });
+  
 
   return config;
 };

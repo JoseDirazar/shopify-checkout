@@ -33,6 +33,8 @@ export const DefaultShopifyShopSelection = {
   "__typename": true,
   "address1": true,
   "address2": true,
+  "bannerMessage": true,
+  "bannerTitle": true,
   "checkoutApiSupported": true,
   "city": true,
   "cookieConsentLevel": true,
@@ -164,6 +166,12 @@ export interface MaybeFindFirstShopifyShopOptions {
 };
 
 
+export interface SaveBannerTitleShopifyShopOptions {
+  /** Select fields other than the defaults of the record to return */
+  select?: AvailableShopifyShopSelection;
+};
+
+
 export interface SavePrePurchaseProductShopifyShopOptions {
   /** Select fields other than the defaults of the record to return */
   select?: AvailableShopifyShopSelection;
@@ -174,6 +182,94 @@ const apiIdentifier = "shopifyShop";
 const pluralApiIdentifier = "shopifyShops";
 
 
+    
+  /**
+   * The fully-qualified, expanded form of the inputs for executing this action.
+   * The flattened style should be preferred over this style, but for models with ambiguous API identifiers, this style can be used to remove any ambiguity.
+   **/
+  export type FullyQualifiedSaveBannerTitleShopifyShopVariables = {
+          bannerTitle?: (Scalars['String'] | null) | null,
+      }
+
+  /**
+   * The inputs for executing saveBannerTitle on shopifyShop.
+   * This is the flattened style of inputs, suitable for general use, and should be preferred.
+   **/
+
+    export type SaveBannerTitleShopifyShopVariables = FullyQualifiedSaveBannerTitleShopifyShopVariables;
+
+
+
+/**
+ * The return value from executing saveBannerTitle on shopifyShop.
+ * "Is a GadgetRecord of the model's type."
+ **/
+export type SaveBannerTitleShopifyShopResult<Options extends SaveBannerTitleShopifyShopOptions> =
+  SelectedShopifyShopOrDefault<Options> extends void ? void : GadgetRecord<SelectedShopifyShopOrDefault<Options>>
+;
+
+
+/**
+  * Executes the saveBannerTitle action on one record specified by `id`. Runs the action and returns a Promise for the updated record.
+  */
+
+// Flat style overload
+async function saveBannerTitleShopifyShop<Options extends SaveBannerTitleShopifyShopOptions>(
+  id: string,
+    variables: SaveBannerTitleShopifyShopVariables,
+
+  options?: LimitToKnownKeys<Options, SaveBannerTitleShopifyShopOptions>
+): Promise<SaveBannerTitleShopifyShopResult<Options>>;
+
+// Fully qualified, nested api identifier overload
+async function saveBannerTitleShopifyShop<Options extends SaveBannerTitleShopifyShopOptions>(
+  id: string,
+      variables: FullyQualifiedSaveBannerTitleShopifyShopVariables,
+  
+  options?: LimitToKnownKeys<Options, SaveBannerTitleShopifyShopOptions>
+): Promise<SaveBannerTitleShopifyShopResult<Options>>;
+
+// Function implementation
+async function saveBannerTitleShopifyShop<Options extends SaveBannerTitleShopifyShopOptions>(
+  this: ShopifyShopManager,
+  id: string,
+      variables: SaveBannerTitleShopifyShopVariables | FullyQualifiedSaveBannerTitleShopifyShopVariables,
+  
+  options?: LimitToKnownKeys<Options, SaveBannerTitleShopifyShopOptions>
+): Promise<SaveBannerTitleShopifyShopResult<Options>> {
+    const newVariables = disambiguateActionParams(
+      this["saveBannerTitle"],
+       id,
+      variables
+    );
+
+    
+  return (await actionRunner<SelectedShopifyShopOrDefault<Options>>(
+    this,
+    "saveBannerTitleShopifyShop",
+    DefaultShopifyShopSelection,
+    apiIdentifier,
+    apiIdentifier,
+    false,
+    {
+              id: {
+          value: id,
+          required: true,
+          type: "GadgetID",
+        },
+                    "bannerTitle": {
+          value: newVariables.bannerTitle,
+          required: false,
+          type: "String",
+        },
+          },
+    options,
+    null,
+    false
+  ));
+}
+
+  
     
   /**
    * The fully-qualified, expanded form of the inputs for executing this action.
@@ -482,6 +578,149 @@ maybeFindFirst: {
     defaultSelection: DefaultShopifyShopSelection,
   } as any
 );
+
+  
+    saveBannerTitle = Object.assign(saveBannerTitleShopifyShop,
+  {
+    type: "action",
+    operationName: "saveBannerTitleShopifyShop",
+    namespace: null,
+    modelApiIdentifier: apiIdentifier,
+    modelSelectionField: apiIdentifier,
+    isBulk: false,
+    defaultSelection: DefaultShopifyShopSelection,
+    variables: {
+      id: {
+        required: true,
+        type: "GadgetID",
+      },
+      "bannerTitle": {
+        required: false,
+        type: "String",
+      },
+    },
+    hasAmbiguousIdentifier: false,
+    /** @deprecated -- effects are dead, long live AAC */
+    hasCreateOrUpdateEffect: false,
+    paramOnlyVariables: ["bannerTitle"],
+    hasReturnType: false,
+    acceptsModelInput: false,
+  } as unknown as {
+    type: "action";
+    operationName: "saveBannerTitleShopifyShop";
+    namespace: null;
+    modelApiIdentifier: "shopifyShop";
+    modelSelectionField: "shopifyShop";
+    isBulk: false;
+    defaultSelection: typeof DefaultShopifyShopSelection;
+    selectionType: AvailableShopifyShopSelection;
+    optionsType: SaveBannerTitleShopifyShopOptions;
+    schemaType:  Query["shopifyShop"];
+
+    variablesType: (
+        { id: string } &
+
+      (
+        FullyQualifiedSaveBannerTitleShopifyShopVariables          | SaveBannerTitleShopifyShopVariables      )
+    )
+    ;
+    variables: {
+              id: {
+          required: true;
+          type: "GadgetID";
+        };
+                    "bannerTitle": {
+          required: false;
+          type: "String";
+        };
+          };
+    hasAmbiguousIdentifier: false;
+    /** @deprecated -- effects are dead, long live AAC */
+    hasCreateOrUpdateEffect: false;
+    paramOnlyVariables: ["bannerTitle"];
+    hasReturnType: false;
+    acceptsModelInput: false;
+  }
+)
+
+  
+      /**
+  * Executes the bulkSaveBannerTitle action with the given inputs.
+  */
+  bulkSaveBannerTitle: {
+    <Options extends SaveBannerTitleShopifyShopOptions>(
+        inputs: (FullyQualifiedSaveBannerTitleShopifyShopVariables | SaveBannerTitleShopifyShopVariables & { id: string })[],
+      options?: LimitToKnownKeys<Options, SaveBannerTitleShopifyShopOptions>
+    ): Promise<SaveBannerTitleShopifyShopResult<Options>[]>;
+    type: "action";
+    operationName: "bulkSaveBannerTitleShopifyShops";
+    namespace: null;
+    modelApiIdentifier: "shopifyShop";
+    modelSelectionField: "shopifyShops";
+    isBulk: true;
+    defaultSelection: typeof DefaultShopifyShopSelection;
+    selectionType: AvailableShopifyShopSelection;
+    optionsType: SaveBannerTitleShopifyShopOptions;
+    schemaType: Query["shopifyShop"];
+    variablesType: (FullyQualifiedSaveBannerTitleShopifyShopVariables | SaveBannerTitleShopifyShopVariables & { id: string })[];
+    variables: {
+        inputs: {
+          required: true;
+          type: "[BulkSaveBannerTitleShopifyShopsInput!]";
+        };
+      };
+    hasReturnType: boolean;
+    acceptsModelInput: boolean;
+  } = Object.assign(
+    async <Options extends SaveBannerTitleShopifyShopOptions>(
+        inputs: (FullyQualifiedSaveBannerTitleShopifyShopVariables | SaveBannerTitleShopifyShopVariables & { id: string })[],
+      options?: LimitToKnownKeys<Options, SaveBannerTitleShopifyShopOptions>
+    ) => {
+        const fullyQualifiedInputs = inputs.map(input =>
+          disambiguateActionParams(
+            this["saveBannerTitle"],
+            undefined,
+            input
+          )
+        );
+      
+      return (await actionRunner<any>(
+        this,
+        "bulkSaveBannerTitleShopifyShops",
+        DefaultShopifyShopSelection,
+        "shopifyShop",
+        "shopifyShops",
+        true,
+          {
+            inputs: {
+              value: fullyQualifiedInputs,
+              ...this["bulkSaveBannerTitle"].variables["inputs"]
+            }
+          }
+,
+        options,
+        null,
+        false
+      )) as any[];
+    },
+    {
+      type: "action",
+      operationName: "bulkSaveBannerTitleShopifyShops",
+      namespace: null,
+      modelApiIdentifier: apiIdentifier,
+      modelSelectionField: "shopifyShops",
+      isBulk: true,
+      defaultSelection: DefaultShopifyShopSelection,
+      variables: {
+        inputs: {
+          required: true,
+          type: "[BulkSaveBannerTitleShopifyShopsInput!]",
+        },
+      },
+      hasReturnType: false,
+      acceptsModelInput: false,
+    } as any
+  );
 
   
     savePrePurchaseProduct = Object.assign(savePrePurchaseProductShopifyShop,

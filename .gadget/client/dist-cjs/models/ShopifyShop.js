@@ -28,6 +28,8 @@ const DefaultShopifyShopSelection = {
   "__typename": true,
   "address1": true,
   "address2": true,
+  "bannerMessage": true,
+  "bannerTitle": true,
   "checkoutApiSupported": true,
   "city": true,
   "cookieConsentLevel": true,
@@ -97,8 +99,39 @@ const DefaultShopifyShopSelection = {
 ;
 ;
 ;
+;
 const apiIdentifier = "shopifyShop";
 const pluralApiIdentifier = "shopifyShops";
+async function saveBannerTitleShopifyShop(id, variables, options) {
+  const newVariables = (0, import_support.disambiguateActionParams)(
+    this["saveBannerTitle"],
+    id,
+    variables
+  );
+  return await (0, import_api_client_core.actionRunner)(
+    this,
+    "saveBannerTitleShopifyShop",
+    DefaultShopifyShopSelection,
+    apiIdentifier,
+    apiIdentifier,
+    false,
+    {
+      id: {
+        value: id,
+        required: true,
+        type: "GadgetID"
+      },
+      "bannerTitle": {
+        value: newVariables.bannerTitle,
+        required: false,
+        type: "String"
+      }
+    },
+    options,
+    null,
+    false
+  );
+}
 async function savePrePurchaseProductShopifyShop(id, variables, options) {
   const newVariables = (0, import_support.disambiguateActionParams)(
     this["savePrePurchaseProduct"],
@@ -240,6 +273,82 @@ class ShopifyShopManager {
         operationName: "shopifyShops",
         modelApiIdentifier: apiIdentifier,
         defaultSelection: DefaultShopifyShopSelection
+      }
+    );
+    this.saveBannerTitle = Object.assign(
+      saveBannerTitleShopifyShop,
+      {
+        type: "action",
+        operationName: "saveBannerTitleShopifyShop",
+        namespace: null,
+        modelApiIdentifier: apiIdentifier,
+        modelSelectionField: apiIdentifier,
+        isBulk: false,
+        defaultSelection: DefaultShopifyShopSelection,
+        variables: {
+          id: {
+            required: true,
+            type: "GadgetID"
+          },
+          "bannerTitle": {
+            required: false,
+            type: "String"
+          }
+        },
+        hasAmbiguousIdentifier: false,
+        /** @deprecated -- effects are dead, long live AAC */
+        hasCreateOrUpdateEffect: false,
+        paramOnlyVariables: ["bannerTitle"],
+        hasReturnType: false,
+        acceptsModelInput: false
+      }
+    );
+    /**
+    * Executes the bulkSaveBannerTitle action with the given inputs.
+    */
+    this.bulkSaveBannerTitle = Object.assign(
+      async (inputs, options) => {
+        const fullyQualifiedInputs = inputs.map(
+          (input) => (0, import_support.disambiguateActionParams)(
+            this["saveBannerTitle"],
+            void 0,
+            input
+          )
+        );
+        return await (0, import_api_client_core.actionRunner)(
+          this,
+          "bulkSaveBannerTitleShopifyShops",
+          DefaultShopifyShopSelection,
+          "shopifyShop",
+          "shopifyShops",
+          true,
+          {
+            inputs: {
+              value: fullyQualifiedInputs,
+              ...this["bulkSaveBannerTitle"].variables["inputs"]
+            }
+          },
+          options,
+          null,
+          false
+        );
+      },
+      {
+        type: "action",
+        operationName: "bulkSaveBannerTitleShopifyShops",
+        namespace: null,
+        modelApiIdentifier: apiIdentifier,
+        modelSelectionField: "shopifyShops",
+        isBulk: true,
+        defaultSelection: DefaultShopifyShopSelection,
+        variables: {
+          inputs: {
+            required: true,
+            type: "[BulkSaveBannerTitleShopifyShopsInput!]"
+          }
+        },
+        hasReturnType: false,
+        acceptsModelInput: false
       }
     );
     this.savePrePurchaseProduct = Object.assign(

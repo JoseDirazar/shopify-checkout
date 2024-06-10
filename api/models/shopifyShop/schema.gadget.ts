@@ -7,6 +7,28 @@ export const schema: GadgetModel = {
   type: "gadget/model-schema/v1",
   storageKey: "DataModel-Shopify-Shop",
   fields: {
+    bannerMessage: {
+      type: "string",
+      shopifyMetafield: {
+        privateMetafield: false,
+        namespace: "banner_message",
+        key: "banner_message",
+        metafieldType: "single_line_text_field",
+        allowMultipleEntries: false,
+      },
+      storageKey: "guv1L9dxpRMJ",
+    },
+    bannerTitle: {
+      type: "string",
+      shopifyMetafield: {
+        privateMetafield: false,
+        namespace: "banner_namespace",
+        key: "banner_title",
+        metafieldType: "single_line_text_field",
+        allowMultipleEntries: false,
+      },
+      storageKey: "R82hjyke-KN6",
+    },
     prePurchaseProduct: {
       type: "string",
       shopifyMetafield: {

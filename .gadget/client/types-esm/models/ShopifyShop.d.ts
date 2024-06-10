@@ -4,6 +4,8 @@ export declare const DefaultShopifyShopSelection: {
     readonly __typename: true;
     readonly address1: true;
     readonly address2: true;
+    readonly bannerMessage: true;
+    readonly bannerTitle: true;
     readonly checkoutApiSupported: true;
     readonly city: true;
     readonly cookieConsentLevel: true;
@@ -119,10 +121,36 @@ export interface MaybeFindFirstShopifyShopOptions {
     /** Only return records matching this freeform search string */
     search?: string | null;
 }
+export interface SaveBannerTitleShopifyShopOptions {
+    /** Select fields other than the defaults of the record to return */
+    select?: AvailableShopifyShopSelection;
+}
 export interface SavePrePurchaseProductShopifyShopOptions {
     /** Select fields other than the defaults of the record to return */
     select?: AvailableShopifyShopSelection;
 }
+/**
+ * The fully-qualified, expanded form of the inputs for executing this action.
+ * The flattened style should be preferred over this style, but for models with ambiguous API identifiers, this style can be used to remove any ambiguity.
+ **/
+export type FullyQualifiedSaveBannerTitleShopifyShopVariables = {
+    bannerTitle?: (Scalars['String'] | null) | null;
+};
+/**
+ * The inputs for executing saveBannerTitle on shopifyShop.
+ * This is the flattened style of inputs, suitable for general use, and should be preferred.
+ **/
+export type SaveBannerTitleShopifyShopVariables = FullyQualifiedSaveBannerTitleShopifyShopVariables;
+/**
+ * The return value from executing saveBannerTitle on shopifyShop.
+ * "Is a GadgetRecord of the model's type."
+ **/
+export type SaveBannerTitleShopifyShopResult<Options extends SaveBannerTitleShopifyShopOptions> = SelectedShopifyShopOrDefault<Options> extends void ? void : GadgetRecord<SelectedShopifyShopOrDefault<Options>>;
+/**
+  * Executes the saveBannerTitle action on one record specified by `id`. Runs the action and returns a Promise for the updated record.
+  */
+declare function saveBannerTitleShopifyShop<Options extends SaveBannerTitleShopifyShopOptions>(id: string, variables: SaveBannerTitleShopifyShopVariables, options?: LimitToKnownKeys<Options, SaveBannerTitleShopifyShopOptions>): Promise<SaveBannerTitleShopifyShopResult<Options>>;
+declare function saveBannerTitleShopifyShop<Options extends SaveBannerTitleShopifyShopOptions>(id: string, variables: FullyQualifiedSaveBannerTitleShopifyShopVariables, options?: LimitToKnownKeys<Options, SaveBannerTitleShopifyShopOptions>): Promise<SaveBannerTitleShopifyShopResult<Options>>;
 /**
  * The fully-qualified, expanded form of the inputs for executing this action.
  * The flattened style should be preferred over this style, but for models with ambiguous API identifiers, this style can be used to remove any ambiguity.
@@ -215,6 +243,66 @@ export declare class ShopifyShopManager {
         selectionType: AvailableShopifyShopSelection;
         optionsType: MaybeFindFirstShopifyShopOptions;
         schemaType: Query["shopifyShop"];
+    };
+    saveBannerTitle: typeof saveBannerTitleShopifyShop & {
+        type: "action";
+        operationName: "saveBannerTitleShopifyShop";
+        namespace: null;
+        modelApiIdentifier: "shopifyShop";
+        modelSelectionField: "shopifyShop";
+        isBulk: false;
+        defaultSelection: typeof DefaultShopifyShopSelection;
+        selectionType: AvailableShopifyShopSelection;
+        optionsType: SaveBannerTitleShopifyShopOptions;
+        schemaType: Query["shopifyShop"];
+        variablesType: ({
+            id: string;
+        } & (FullyQualifiedSaveBannerTitleShopifyShopVariables | SaveBannerTitleShopifyShopVariables));
+        variables: {
+            id: {
+                required: true;
+                type: "GadgetID";
+            };
+            "bannerTitle": {
+                required: false;
+                type: "String";
+            };
+        };
+        hasAmbiguousIdentifier: false;
+        /** @deprecated -- effects are dead, long live AAC */
+        hasCreateOrUpdateEffect: false;
+        paramOnlyVariables: ["bannerTitle"];
+        hasReturnType: false;
+        acceptsModelInput: false;
+    };
+    /**
+* Executes the bulkSaveBannerTitle action with the given inputs.
+*/
+    bulkSaveBannerTitle: {
+        <Options extends SaveBannerTitleShopifyShopOptions>(inputs: (FullyQualifiedSaveBannerTitleShopifyShopVariables | SaveBannerTitleShopifyShopVariables & {
+            id: string;
+        })[], options?: LimitToKnownKeys<Options, SaveBannerTitleShopifyShopOptions>): Promise<SaveBannerTitleShopifyShopResult<Options>[]>;
+        type: "action";
+        operationName: "bulkSaveBannerTitleShopifyShops";
+        namespace: null;
+        modelApiIdentifier: "shopifyShop";
+        modelSelectionField: "shopifyShops";
+        isBulk: true;
+        defaultSelection: typeof DefaultShopifyShopSelection;
+        selectionType: AvailableShopifyShopSelection;
+        optionsType: SaveBannerTitleShopifyShopOptions;
+        schemaType: Query["shopifyShop"];
+        variablesType: (FullyQualifiedSaveBannerTitleShopifyShopVariables | SaveBannerTitleShopifyShopVariables & {
+            id: string;
+        })[];
+        variables: {
+            inputs: {
+                required: true;
+                type: "[BulkSaveBannerTitleShopifyShopsInput!]";
+            };
+        };
+        hasReturnType: boolean;
+        acceptsModelInput: boolean;
     };
     savePrePurchaseProduct: typeof savePrePurchaseProductShopifyShop & {
         type: "action";

@@ -27,9 +27,9 @@ function Extension() {
   const applyCartLinesChange = useApplyCartLinesChange();
   const [prePurchaseProduct] = useAppMetafields();
 
-  const [products, setProducts] = useState(null);
+  const [collection, setCollection] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [adding, setAdding] = useState(false);
+  const [adding, setAdding] = useState({});
   const [showError, setShowError] = useState(false);
   const [selectedVariantIds, setSelectedVariantIds] = useState({});
 
@@ -66,13 +66,21 @@ function Extension() {
         }`
       )
         .then(({ data }) => {
-          setProducts(data.collection);
+          const collection = data.collection;
+          console.log("collection", collection);
+          setCollection(collection);
+
+          const defaultVariantIds = {};
+          collection.products.nodes.forEach((product) => {
+            defaultVariantIds[product.id] = product.variants.nodes[0].id;
+          });
+          setSelectedVariantIds(defaultVariantIds);
         })
-        .catch((error) => console.error(error))
+        .catch((error) => console.log(error))
         .finally(() => setLoading(false));
     }
   }, [prePurchaseProduct, query]);
-  console.log(products);
+
   useEffect(() => {
     if (showError) {
       const timer = setTimeout(() => setShowError(false), 3000);
@@ -83,32 +91,10 @@ function Extension() {
   const lines = useCartLines();
 
   if (loading) {
-    return (
-      <BlockStack spacing="loose">
-        <Divider />
-        <Heading level={2}>You might also like</Heading>
-        {[...Array(3)].map((_, index) => (
-          <InlineLayout
-            key={index}
-            spacing="base"
-            columns={[34, "fill", "auto"]}
-            blockAlignment="center"
-          >
-            <SkeletonImage aspectRatio={1} />
-            <BlockStack spacing="none">
-              <SkeletonText inlineSize="large" />
-              <SkeletonText inlineSize="small" />
-            </BlockStack>
-            <Button kind="secondary" disabled={true}>
-              Add
-            </Button>
-          </InlineLayout>
-        ))}
-      </BlockStack>
-    );
+    return <Loader />;
   }
 
-  if (!loading && !products) {
+  if (!loading && !collection) {
     return null;
   }
 
@@ -120,13 +106,13 @@ function Extension() {
 
   const handleAddToCart = async (productId) => {
     const variantId = selectedVariantIds[productId];
-    setAdding(true);
+    setAdding((prev) => ({ ...prev, [productId]: true }));
     const result = await applyCartLinesChange({
       type: "addCartLine",
       merchandiseId: variantId,
       quantity: 1,
     });
-    setAdding(false);
+    setAdding((prev) => ({ ...prev, [productId]: false }));
     if (result.type === "error") {
       setShowError(true);
       console.error(result.message);
@@ -136,10 +122,9 @@ function Extension() {
   return (
     <BlockStack spacing="loose">
       <Divider />
-      <Heading level={2}>{products.title}</Heading>
-      {products.products.nodes.map((product) => {
+      <Heading level={2}>{collection.title}</Heading>
+      {collection.products.nodes.map((product) => {
         const { id, images, title, variants } = product;
-        console.log(product);
         const imageUrl =
           images.nodes[0]?.url ??
           "https://cdn.shopify.com/s/files/1/0533/2089/files/placeholder-images-image_medium.png?format=webp&v=1530129081";
@@ -176,19 +161,18 @@ function Extension() {
               description={title}
               aspectRatio={1}
             />
-            <BlockStack spacing="none">
-              <Text size="medium" emphasis="strong">
-                {title}
-              </Text>
+            <BlockStack spacing="extraTight">
               <Select
+                label={title ? title : select}
                 options={variantOptions}
                 value={selectedVariantId}
                 onChange={(value) => handleVariantChange(id, value)}
+                labelInLine
               />
             </BlockStack>
             <Button
-              kind="secondary"
-              loading={adding}
+              appearance="monochrome"
+              loading={adding[id]}
               accessibilityLabel={`Add ${title} to cart`}
               onPress={() => handleAddToCart(id)}
             >
@@ -202,6 +186,32 @@ function Extension() {
           There was an issue adding this product. Please try again.
         </Banner>
       )}
+    </BlockStack>
+  );
+}
+
+function Loader() {
+  return (
+    <BlockStack spacing="loose">
+      <Divider />
+      <Heading level={2}>You might also like</Heading>
+      {[...Array(3)].map((_, index) => (
+        <InlineLayout
+          key={index}
+          spacing="base"
+          columns={[34, "fill", "auto"]}
+          blockAlignment="center"
+        >
+          <SkeletonImage aspectRatio={1} />
+          <BlockStack spacing="none">
+            <SkeletonText inlineSize="large" />
+            <SkeletonText inlineSize="small" />
+          </BlockStack>
+          <Button kind="secondary" disabled={true}>
+            Add
+          </Button>
+        </InlineLayout>
+      ))}
     </BlockStack>
   );
 }

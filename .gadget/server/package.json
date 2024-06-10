@@ -2,7 +2,7 @@
   "dependencies": {
     "@fastify/request-context": "^5.0.0",
     "@gadget-client/checkout-testing": "link:../client",
-    "@gadgetinc/api-client-core": "0.15.23",
+    "@gadgetinc/api-client-core": "0.15.24",
     "@types/node": "^20.8.4",
     "fastify": "^4.24.2"
   },
@@ -22,7 +22,7 @@
   "gadget": {
     "applicationName": "checkout-testing",
     "environmentName": "Development",
-    "environmentVersion": "421"
+    "environmentVersion": "578"
   },
   "name": "gadget-server",
   "peerDependencies": {
@@ -31,5 +31,5 @@
   "private": true,
   "scripts": {},
   "types": "types/index.d.ts",
-  "version": "1.2.0-development.421"
+  "version": "1.4.0-development.578"
 }

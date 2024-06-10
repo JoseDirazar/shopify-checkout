@@ -76,6 +76,8 @@ export type DefaultShopifyShopServerSelection = {
     readonly productVariants: false;
     readonly productImages: false;
     readonly collects: false;
+    readonly bannerTitle: true;
+    readonly bannerMessage: true;
 };
 /** Context of the `update` action on the `shopifyShop` model. */
 export interface UpdateShopifyShopActionContext extends AmbientContext {
@@ -157,6 +159,35 @@ export interface ReinstallShopifyShopActionContext extends AmbientContext {
     * @private The context of this action.
     */
     context: ReinstallShopifyShopActionContext;
+}
+/** Context of the `saveBannerTitle` action on the `shopifyShop` model. */
+export interface SaveBannerTitleShopifyShopActionContext extends AmbientContext {
+    /**
+    * The model this action is operating on
+    */
+    model: NotYetTyped;
+    /**
+    * An object specifying the `shopifyShop` record this action is operating on.
+    */
+    record: GadgetRecord<Select<ShopifyShop, DefaultShopifyShopServerSelection>>;
+    /**
+    * @deprecated Use 'return' instead.
+    */
+    scope: ActionExecutionScope;
+    /**
+    * An object specifying the trigger to this action (e.g. API call, webhook events etc.).
+    */
+    trigger: ActionTrigger;
+    /**
+    * An object containing the incoming data(this models fields) passed by triggers or user inputs.
+    */
+    params: {
+        bannerTitle?: string;
+    };
+    /**
+    * @private The context of this action.
+    */
+    context: SaveBannerTitleShopifyShopActionContext;
 }
 /** Context of the `savePrePurchaseProduct` action on the `shopifyShop` model. */
 export interface SavePrePurchaseProductShopifyShopActionContext extends AmbientContext {

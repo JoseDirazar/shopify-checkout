@@ -2,7 +2,7 @@ import type { OperationContext, Exchange } from "@urql/core";
 import { pipe, map } from "wonka";
 import { GadgetConnection, AuthenticationMode, GadgetTransaction, InternalModelManager, ActionFunctionMetadata, GlobalActionFunction } from "@gadgetinc/api-client-core";
 import type { ClientOptions as ApiClientOptions, AnyClient } from '@gadgetinc/api-client-core';
-import { enqueueActionRunner, assert, BackgroundActionHandle, type EnqueueBackgroundActionOptions, type AnyActionFunction } from '@gadgetinc/api-client-core';
+import { enqueueActionRunner, assert, BackgroundActionHandle, type EnqueueBackgroundActionOptions, type AnyActionFunction, type BackgroundActionResultData } from '@gadgetinc/api-client-core';
 
 import type { DocumentNode } from 'graphql';
 import type {
@@ -398,7 +398,7 @@ scheduledShopifySync: {
    * @example
    * const handle = await api.enqueue(api.widget.bulkCreate, [{ name: "new name b" }, { name: "new name b" }]);
    **/
-  async enqueue<Action extends AnyActionFunction & AllOptionalVariables<Action['variablesType']>>(action: Action, input?: Action["variablesType"], options?: EnqueueBackgroundActionOptions<Action>): Promise<BackgroundActionHandle<Action>>;
+  async enqueue<SchemaT, Action extends AnyActionFunction & AllOptionalVariables<Action['variablesType']>>(action: Action, input?: Action["variablesType"], options?: EnqueueBackgroundActionOptions<Action>): Promise<BackgroundActionHandle<SchemaT, Action>>;
   /**
    * Enqueue one action for execution in the backend. The backend will run the action as soon as possible, and return a handle to the action right away that can be used to check its status.
    *
@@ -427,7 +427,7 @@ scheduledShopifySync: {
    * @example
    * const handle = await api.enqueue(api.widget.bulkCreate, [{ name: "new name b" }, { name: "new name b" }]);
    **/
-  async enqueue<Action extends AnyActionFunction & {variablesType: {id: string}}>(action: Action, id: string, options?: EnqueueBackgroundActionOptions<Action>): Promise<BackgroundActionHandle<Action>>;
+  async enqueue<SchemaT, Action extends AnyActionFunction & {variablesType: {id: string}}>(action: Action, id: string, options?: EnqueueBackgroundActionOptions<Action>): Promise<BackgroundActionHandle<SchemaT, Action>>;
   /**
    * Enqueue one action for execution in the backend. The backend will run the action as soon as possible, and return a handle to the action right away that can be used to check its status. This is the variant of enqueue for actions which accept no inputs.
    *
@@ -452,7 +452,7 @@ scheduledShopifySync: {
    * @example
    * const handle = await api.enqueue(api.widget.bulkCreate, [{ name: "new name b" }, { name: "new name b" }]);
    **/
-  async enqueue<Action extends ActionFunctionMetadata<any, Record<string, never>, any, any, any, any> | GlobalActionFunction<Record<string, never>>>(action: Action, options?: EnqueueBackgroundActionOptions<Action>): Promise<BackgroundActionHandle<Action>>;
+  async enqueue<SchemaT, Action extends ActionFunctionMetadata<any, Record<string, never>, any, any, any, any> | GlobalActionFunction<Record<string, never>>>(action: Action, options?: EnqueueBackgroundActionOptions<Action>): Promise<BackgroundActionHandle<SchemaT, Action>>;
   /**
    * Enqueue a set of actions in bulk for execution. The backend will run each action as soon as possible, and return an array of handles to each action right away that can be used to check their statuses.
    *
@@ -470,7 +470,7 @@ scheduledShopifySync: {
    * const handle = await api.enqueue(api.widget.addInventory, [{id: 1, amount: 10}, {id: 2, amount: 15}]);
    *
   **/
-  async enqueue<Action extends ActionFunctionMetadata<any, any, any, any, any, true>>(action: Action, input: Action["variablesType"], options?: EnqueueBackgroundActionOptions<Action>): Promise<BackgroundActionHandle<Action>[]>;
+  async enqueue<SchemaT, Action extends ActionFunctionMetadata<any, any, any, any, any, true>>(action: Action, input: Action["variablesType"], options?: EnqueueBackgroundActionOptions<Action>): Promise<BackgroundActionHandle<SchemaT, Action>[]>;
   /**
    * Enqueue one action for execution in the backend. The backend will run the action as soon as possible, and return a handle to the action right away that can be used to check its status.
    *
@@ -493,8 +493,8 @@ scheduledShopifySync: {
    * @example
    * const handle = await api.enqueue(api.someGlobalAction, { input: "value" });
    **/
-  async enqueue<Action extends AnyActionFunction>(action: Action, input: Action["variablesType"], options?: EnqueueBackgroundActionOptions<Action>): Promise<BackgroundActionHandle<Action>>;
-  async enqueue<Action extends AnyActionFunction>(action: Action, inputOrOptions?: Action["variablesType"] | EnqueueBackgroundActionOptions<Action>, maybeOptions?: EnqueueBackgroundActionOptions<Action>): Promise<BackgroundActionHandle<Action> | BackgroundActionHandle<Action>[]> {
+  async enqueue<SchemaT, Action extends AnyActionFunction>(action: Action, input: Action["variablesType"], options?: EnqueueBackgroundActionOptions<Action>): Promise<BackgroundActionHandle<SchemaT, Action>>;
+  async enqueue<SchemaT, Action extends AnyActionFunction>(action: Action, inputOrOptions?: Action["variablesType"] | EnqueueBackgroundActionOptions<Action>, maybeOptions?: EnqueueBackgroundActionOptions<Action>): Promise<BackgroundActionHandle<SchemaT, Action> | BackgroundActionHandle<SchemaT, Action>[]> {
     assert(action, ".enqueue must be passed an action as the first argument but was passed undefined");
 
     let input: Action["variablesType"] | undefined;
@@ -532,7 +532,7 @@ scheduledShopifySync: {
    * @example
    * const handle = api.handle(api.someGlobalAction, "app-job-56789");
    **/
-  handle<Action extends AnyActionFunction>(action: Action, id: string): BackgroundActionHandle<Action> {
+  handle<SchemaT, Action extends AnyActionFunction>(action: Action, id: string): BackgroundActionHandle<SchemaT, Action> {
     return new BackgroundActionHandle(this.connection, action, id);
   }
   

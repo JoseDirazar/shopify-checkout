@@ -1,6 +1,6 @@
 {
   "name": "@gadget-client/checkout-testing",
-  "version": "1.2.0-development.421",
+  "version": "1.4.0-development.578",
   "files": [
     "dist-*/",
     "types",
@@ -25,7 +25,7 @@
   },
   "private": true,
   "dependencies": {
-    "@gadgetinc/api-client-core": "0.15.23"
+    "@gadgetinc/api-client-core": "0.15.24"
   },
   "devDependencies": {
     "typescript": "^5.4.5",
@@ -37,6 +37,6 @@
   "gadget": {
     "applicationName": "checkout-testing",
     "environmentName": "Development",
-    "environmentVersion": "421"
+    "environmentVersion": "578"
   }
 }
